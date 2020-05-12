@@ -5,11 +5,14 @@ class ProfilesController < ApplicationController
   # GET /profiles.json
   def index
     @profiles = Profile.all
+    @users =User.all
   end
 
   # GET /profiles/1
   # GET /profiles/1.json
   def show
+    @user = User.first
+    @profile = Profile.first
   end
 
   # GET /profiles/new

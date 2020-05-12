@@ -11,6 +11,8 @@ class EventsController < ApplicationController
   # GET /events/1.json
   def show
     @event = Event.find(params[:id])
+    @comments = @event.comment
+    @votes = Vote.where(event_id: params[:id]).limit(1)
   end
 
   # GET /events/new

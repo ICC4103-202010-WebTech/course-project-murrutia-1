@@ -5,12 +5,15 @@ class InboxesController < ApplicationController
   # GET /inboxes.json
   def index
     @inboxes = Inbox.all
+    @messages = @inbox.messages
   end
 
   # GET /inboxes/1
   # GET /inboxes/1.json
   def show
-    @inbox = Inbox.where(user_id: params[:user_id])
+    @inbox_u = Inbox.where(user_id: params[:user_id])
+    @inbox = Inbox.find(params[:id])
+    @messages = @inbox.messages
   end
 
   # GET /inboxes/new

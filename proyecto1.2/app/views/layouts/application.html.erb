@@ -10,6 +10,27 @@
   </head>
 
   <body>
+
+  <header>
+    <h1><%= link_to "Events App", root_path %></h1>
+  </header>
+
+  <nav>
+    <ul class = "navigation">
+      <li class="nav-item"><a><%= link_to 'Organization', '/organization' %></a></li>
+      <li class="nav-item"><a><%= link_to 'Mailbox', '/mailboxes/1' %></a></li>
+      <li class="nav-item"><a><%= link_to 'Profile', '/profiles/1' %></a></li>
+      <li class="nav-item"><a class ="logout"><%= link_to 'Log Out', root_path %></a></li>
+    </ul>
+  </nav>
+
+  <main id="main_content">
     <%= yield %>
+  </main>
+
+  <footer>
+    <p> Developed by Martin Urrutia</p>
+  </footer>
+
   </body>
 </html>

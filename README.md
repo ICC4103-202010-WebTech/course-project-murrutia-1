@@ -1,11 +1,6 @@
-# course-project-murrutia-1
+Martín Urrutia
 
-"Disculpen pero tuve muchos problemas para que los programas me funcionaran y pudiera empezar a trabajar, cuando lo logre ya era un
-poco tarde, y como trabajo solo, no alcance a poner los registros en la base de datos, por lo que las tablas estan vacias. (le pedi
-un poco de mas tiempo al profesor pero no me ha contestado), creo que es lo unico que falta, en teoria deberian funcionar los
-queries si tuviera registros" 
-
-Anyways:
+ruby -v: ruby 2.6.1p33
 
 1- events belong to an user 
 2-select an organization and see his members

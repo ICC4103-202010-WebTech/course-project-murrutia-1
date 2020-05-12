@@ -11,6 +11,10 @@ Rails.application.routes.draw do
   end
   resources :profiles
   resources :organizations
+  resource :events do
+    resources :organizations
+    resources :comments
+  end
   resources :inboxes do
     resources :messages, shallow: true
   end
