@@ -1,7 +1,7 @@
 class Event < ApplicationRecord
   belongs_to :user
-  has_many :comments
-  has_many :guests
-  has_many :option_dates
+  has_many :comments, dependent: :destroy
+  has_many :guests, dependent: :destroy
+  has_many :option_dates, dependent: :destroy
 
 end

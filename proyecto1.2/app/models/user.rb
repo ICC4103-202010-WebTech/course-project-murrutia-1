@@ -1,14 +1,14 @@
 class User < ApplicationRecord
-  has_many :comments
-  has_many :events
-  has_many :guests
-  has_many :members
-  has_many :votes
-  has_many :messages
-  has_many :replies
-  has_one :profile
-  has_one :inbox
-  has_one :organization
+  has_many :comments, dependent: :destroy
+  has_many :events, dependent: :destroy
+  has_many :guests, dependent: :destroy
+  has_many :members, dependent: :destroy
+  has_many :votes, dependent: :destroy
+  has_many :messages#, dependent: :destroy se deben quedar
+  has_many :replies, dependent: :destroy
+  has_one :profile, dependent: :destroy
+  has_one :inbox, dependent: :destroy
+  has_one :organization, dependent: :destroy
 
   validates :email, format: /\w+@\w+\.{1}[a-zA-Z]{2,}/ #generic format
   validates :name, :email, presence: true, uniqueness: true

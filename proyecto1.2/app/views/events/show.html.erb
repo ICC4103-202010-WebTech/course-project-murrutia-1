@@ -24,6 +24,19 @@
   </tr>
   </tbody>
 </table>
+
+<h3>Date options to vote</h3>
+<%@date_options.each do |date|%>
+  <%@vote_number= date.votes.count %>
+  <p><%=date.day%>  <%=@vote_number%> Votes</p>
+<%end%>
+<p><%=link_to 'Vote for this event'%>></p>
+
+<h3>Guests</h3>
+<%@guests.each do |guest|%>
+  <p><%=guest.user.name%> <%=link_to 'See profile' %></p>
+<%end%>
+
 <h4>Comments</h4>
 
 <%= @comments.each do |comment| %>

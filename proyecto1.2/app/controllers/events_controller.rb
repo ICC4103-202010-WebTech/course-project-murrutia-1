@@ -13,6 +13,8 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
     @comments = @event.comment
     @votes = Vote.where(event_id: params[:id]).limit(1)
+    @guests = @event.guests
+    @date_options = @event.option_date
   end
 
   # GET /events/new
