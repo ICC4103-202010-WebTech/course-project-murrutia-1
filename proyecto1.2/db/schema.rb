@@ -14,7 +14,7 @@ ActiveRecord::Schema.define(version: 2020_05_09_232804) do
 
   create_table "admin_orgs", force: :cascade do |t|
     t.string "name"
-    t.string "email"
+    t.string "mail"
     t.integer "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -52,8 +52,15 @@ ActiveRecord::Schema.define(version: 2020_05_09_232804) do
   end
 
   create_table "inboxes", force: :cascade do |t|
+    t.integer "user_from"
+    t.string "message"
+    t.integer "user_to"
+    t.integer "inboxes_id"
+    t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["inboxes_id"], name: "index_inboxes_on_inboxes_id"
+    t.index ["user_id"], name: "index_inboxes_on_user_id"
   end
 
   create_table "members", force: :cascade do |t|
@@ -67,8 +74,12 @@ ActiveRecord::Schema.define(version: 2020_05_09_232804) do
 
   create_table "messages", force: :cascade do |t|
     t.string "text"
+    t.integer "messages_id"
+    t.integer "inbox_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["mailbox_id"], name: "index_messages_on_inbox_id"
+    t.index ["messages_id"], name: "index_messages_on_messages_id"
   end
 
   create_table "option_dates", force: :cascade do |t|
@@ -108,7 +119,7 @@ ActiveRecord::Schema.define(version: 2020_05_09_232804) do
 
   create_table "users", force: :cascade do |t|
     t.string "name"
-    t.string "email"
+    t.string "mail"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -117,10 +128,14 @@ ActiveRecord::Schema.define(version: 2020_05_09_232804) do
     t.string "date"
     t.integer "user_id", null: false
     t.integer "event_id", null: false
+    t.integer "votes_id"
+    t.integer "option_dates_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["event_id"], name: "index_votes_on_event_id"
+    t.index ["option_dates_id"], name: "index_votes_on_option_dates_id"
     t.index ["user_id"], name: "index_votes_on_user_id"
+    t.index ["votes_id"], name: "index_votes_on_votes_id"
   end
 
   add_foreign_key "admin_orgs", "users"
@@ -129,12 +144,18 @@ ActiveRecord::Schema.define(version: 2020_05_09_232804) do
   add_foreign_key "events", "users"
   add_foreign_key "guests", "events"
   add_foreign_key "guests", "users"
+  add_foreign_key "inboxes", "inboxes", column: "inboxes_id"
+  add_foreign_key "inboxes", "users"
   add_foreign_key "members", "events"
   add_foreign_key "members", "users"
+  add_foreign_key "messages", "mailboxes"
+  add_foreign_key "messages", "messages", column: "messages_id"
   add_foreign_key "organizations", "admin_orgs"
   add_foreign_key "profiles", "system_admins"
   add_foreign_key "profiles", "users"
   add_foreign_key "system_admins", "users"
   add_foreign_key "votes", "events"
+  add_foreign_key "votes", "option_dates", column: "option_dates_id"
   add_foreign_key "votes", "users"
+  add_foreign_key "votes", "votes", column: "votes_id"
 end

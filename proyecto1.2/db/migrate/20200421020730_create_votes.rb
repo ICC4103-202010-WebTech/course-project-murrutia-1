@@ -4,7 +4,7 @@ class CreateVotes < ActiveRecord::Migration[6.0]
       t.string :date
       t.references :user, null: false, foreign_key: true
       t.references :event, null: false, foreign_key: true
-
+      t.references :votes, :option_dates, foreign_key: true
       t.timestamps
     end
   end

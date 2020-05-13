@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   end
   resources :profiles
   resources :organizations
+  resources :users
   resource :events do
     resources :organizations
     resources :comments
@@ -19,6 +20,7 @@ Rails.application.routes.draw do
     resources :messages, shallow: true
   end
 
+  resources :users, defaults: { format: :html }
   resources :comments, defaults: { format: :html }
   resources :events, defaults: { format: :html}
   resources :inboxes, defaults: { format: :html}

@@ -10,8 +10,8 @@ class User < ApplicationRecord
   has_one :inbox, dependent: :destroy
   has_one :organization, dependent: :destroy
 
-  validates :email, format: /\w+@\w+\.{1}[a-zA-Z]{2,}/ #generic format
-  validates :name, :email, presence: true, uniqueness: true
+  validates :mail, format: /\w+@\w+\.{1}[a-zA-Z]{2,}/ #generic format
+  validates :name, :mail, presence: true, uniqueness: true
   after_create :create_inbox
   after_create :create_profile
 
