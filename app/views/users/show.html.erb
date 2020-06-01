@@ -1,14 +1,4 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Profile</h1>
-<img class="flex-image2" src="https://www.madrimasd.org/blogs/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png">
-<h2>User Info:</h2>
-<p>Username: <%= @user.username  %>
-  <br>Full Name: <%= @user.full_name %>
-  <br>Age: <%= @user.age %>
-  <br>Email: <%= @user.email %>
-</p>
-
-
-<!%= link_to 'Edit', edit_user_path(@user) %>
+<%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>

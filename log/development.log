@@ -1,107 +1,270 @@
-  [1m[35m (1.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
-  [1m[35m (8.9ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
-  [1m[35m (5.6ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (1.6ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (21.5ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (6.0ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
   [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
-Migrating to CreateUsers (20200419224537)
+Migrating to CreateUsers (20200420040457)
   [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
-  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "users" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "username" varchar, "password" varchar, "full_name" varchar, "email" varchar, "age" integer, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
-  [1m[36mprimary::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200419224537"]]
-  [1m[35m (6.1ms)[0m  [1m[36mcommit transaction[0m
-Migrating to CreateUserOnEvents (20200419224538)
-  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
-  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "user_on_events" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "status" integer, "user_id" integer NOT NULL, "event_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_d356f132c6"
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "users" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "mail" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mprimary::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200420040457"]]
+  [1m[35m (6.4ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateEvents (20200420041903)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "events" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar, "description" varchar, "date" varchar, "private" varchar, "user_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_0cb5590091"
 FOREIGN KEY ("user_id")
   REFERENCES "users" ("id")
-, CONSTRAINT "fk_rails_900a257209"
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_events_on_user_id" ON "events" ("user_id")[0m
+  [1m[36mprimary::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200420041903"]]
+  [1m[35m (7.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateGuests (20200420042034)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "guests" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "event_id" integer NOT NULL, "user_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_64ecc46b69"
 FOREIGN KEY ("event_id")
   REFERENCES "events" ("id")
+, CONSTRAINT "fk_rails_9b121eeada"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
 )[0m
-  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_user_on_events_on_user_id" ON "user_on_events" ("user_id")[0m
-  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_user_on_events_on_event_id" ON "user_on_events" ("event_id")[0m
-  [1m[36mprimary::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200419224538"]]
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_guests_on_event_id" ON "guests" ("event_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_guests_on_user_id" ON "guests" ("user_id")[0m
+  [1m[36mprimary::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200420042034"]]
   [1m[35m (7.0ms)[0m  [1m[36mcommit transaction[0m
-Migrating to CreateOrganizations (20200419224539)
+Migrating to CreateAdminOrgs (20200420042426)
   [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
-  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "organizations" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "description" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
-  [1m[36mprimary::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200419224539"]]
-  [1m[35m (5.9ms)[0m  [1m[36mcommit transaction[0m
-Migrating to CreateUserOnOrganizations (20200419224540)
-  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
-  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "user_on_organizations" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "user_role" integer, "organization_id" integer NOT NULL, "user_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_add23e35bf"
-FOREIGN KEY ("organization_id")
-  REFERENCES "organizations" ("id")
-, CONSTRAINT "fk_rails_a9dcc5d4da"
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "admin_orgs" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "mail" varchar, "user_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_28504ab9e8"
 FOREIGN KEY ("user_id")
   REFERENCES "users" ("id")
 )[0m
-  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_user_on_organizations_on_organization_id" ON "user_on_organizations" ("organization_id")[0m
-  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_user_on_organizations_on_user_id" ON "user_on_organizations" ("user_id")[0m
-  [1m[36mprimary::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200419224540"]]
-  [1m[35m (6.6ms)[0m  [1m[36mcommit transaction[0m
-Migrating to CreateEvents (20200419224542)
-  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
-  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "events" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "description" varchar, "location" varchar, "creation_date" date, "starting_event_date" date, "event_privacy" integer, "organization_id" integer NOT NULL, "user_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_163b5130b5"
-FOREIGN KEY ("organization_id")
-  REFERENCES "organizations" ("id")
-, CONSTRAINT "fk_rails_0cb5590091"
-FOREIGN KEY ("user_id")
-  REFERENCES "users" ("id")
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_admin_orgs_on_user_id" ON "admin_orgs" ("user_id")[0m
+  [1m[36mprimary::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200420042426"]]
+  [1m[35m (7.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateOrganizations (20200420042518)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "organizations" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "admin_org_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_0b8f77bf02"
+FOREIGN KEY ("admin_org_id")
+  REFERENCES "admin_orgs" ("id")
 )[0m
-  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_events_on_organization_id" ON "events" ("organization_id")[0m
-  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_events_on_user_id" ON "events" ("user_id")[0m
-  [1m[36mprimary::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200419224542"]]
-  [1m[35m (6.5ms)[0m  [1m[36mcommit transaction[0m
-Migrating to CreateComments (20200419224543)
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_organizations_on_admin_org_id" ON "organizations" ("admin_org_id")[0m
+  [1m[36mprimary::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200420042518"]]
+  [1m[35m (5.7ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateComments (20200420042710)
   [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
-  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "comments" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "message" text, "user_id" integer NOT NULL, "event_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_03de2dc08c"
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "comments" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "text" varchar, "user_id" integer NOT NULL, "event_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_03de2dc08c"
 FOREIGN KEY ("user_id")
   REFERENCES "users" ("id")
 , CONSTRAINT "fk_rails_c6b77e33aa"
 FOREIGN KEY ("event_id")
   REFERENCES "events" ("id")
 )[0m
-  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_comments_on_user_id" ON "comments" ("user_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_comments_on_user_id" ON "comments" ("user_id")[0m
   [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_comments_on_event_id" ON "comments" ("event_id")[0m
-  [1m[36mprimary::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200419224543"]]
-  [1m[35m (6.7ms)[0m  [1m[36mcommit transaction[0m
-Migrating to CreateCommentReplies (20200419224544)
-  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
-  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "comment_replies" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "message" text, "user_id" integer NOT NULL, "comment_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_ea1ac359f0"
+  [1m[36mprimary::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200420042710"]]
+  [1m[35m (6.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateVotes (20200421020730)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "votes" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "date" varchar, "user_id" integer NOT NULL, "event_id" integer NOT NULL, "votes_id" integer, "option_dates_id" integer, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_c9b3bef597"
 FOREIGN KEY ("user_id")
   REFERENCES "users" ("id")
-, CONSTRAINT "fk_rails_7be15a50f9"
-FOREIGN KEY ("comment_id")
-  REFERENCES "comments" ("id")
-)[0m
-  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_comment_replies_on_user_id" ON "comment_replies" ("user_id")[0m
-  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_comment_replies_on_comment_id" ON "comment_replies" ("comment_id")[0m
-  [1m[36mprimary::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200419224544"]]
-  [1m[35m (6.2ms)[0m  [1m[36mcommit transaction[0m
-Migrating to CreateDateVotes (20200419224545)
-  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
-  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "date_votes" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "date_voted" date, "event_id" integer NOT NULL, "user_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_d8bf857732"
+, CONSTRAINT "fk_rails_82cb630a75"
 FOREIGN KEY ("event_id")
   REFERENCES "events" ("id")
-, CONSTRAINT "fk_rails_8b8bf0783c"
-FOREIGN KEY ("user_id")
-  REFERENCES "users" ("id")
+, CONSTRAINT "fk_rails_163e68eab4"
+FOREIGN KEY ("votes_id")
+  REFERENCES "votes" ("id")
+, CONSTRAINT "fk_rails_5205901197"
+FOREIGN KEY ("option_dates_id")
+  REFERENCES "option_dates" ("id")
 )[0m
-  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_date_votes_on_event_id" ON "date_votes" ("event_id")[0m
-  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_date_votes_on_user_id" ON "date_votes" ("user_id")[0m
-  [1m[36mprimary::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200419224545"]]
-  [1m[35m (6.9ms)[0m  [1m[36mcommit transaction[0m
-Migrating to CreateSystemAdministrators (20200419225339)
-  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
-  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "system_administrators" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "is_admin" integer, "user_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_9f74eb67f7"
-FOREIGN KEY ("user_id")
-  REFERENCES "users" ("id")
-)[0m
-  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_system_administrators_on_user_id" ON "system_administrators" ("user_id")[0m
-  [1m[36mprimary::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200419225339"]]
-  [1m[35m (6.0ms)[0m  [1m[36mcommit transaction[0m
-  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_votes_on_user_id" ON "votes" ("user_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_votes_on_event_id" ON "votes" ("event_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_votes_on_votes_id" ON "votes" ("votes_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_votes_on_option_dates_id" ON "votes" ("option_dates_id")[0m
+  [1m[36mprimary::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200421020730"]]
+  [1m[35m (8.6ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateMembers (20200421021026)
   [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
-  [1m[36mActiveRecord::InternalMetadata Create (0.2ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2020-06-01 03:49:15.833412"], ["updated_at", "2020-06-01 03:49:15.833412"]]
-  [1m[35m (5.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "members" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "event_id" integer NOT NULL, "user_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_cfab76f7a8"
+FOREIGN KEY ("event_id")
+  REFERENCES "events" ("id")
+, CONSTRAINT "fk_rails_2e88fb7ce9"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_members_on_event_id" ON "members" ("event_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_members_on_user_id" ON "members" ("user_id")[0m
+  [1m[36mprimary::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200421021026"]]
+  [1m[35m (7.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateProfiles (20200421023812)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "profiles" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer NOT NULL, "system_admin_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_e424190865"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+, CONSTRAINT "fk_rails_2d52ac687a"
+FOREIGN KEY ("system_admin_id")
+  REFERENCES "system_admins" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_profiles_on_user_id" ON "profiles" ("user_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_profiles_on_system_admin_id" ON "profiles" ("system_admin_id")[0m
+  [1m[36mprimary::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200421023812"]]
+  [1m[35m (8.3ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateSystemAdmins (20200421023840)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "system_admins" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_53b10fbe11"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_system_admins_on_user_id" ON "system_admins" ("user_id")[0m
+  [1m[36mprimary::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200421023840"]]
+  [1m[35m (7.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateReplies (20200509231832)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "replies" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mprimary::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200509231832"]]
+  [1m[35m (5.9ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateInboxes (20200509232309)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "inboxes" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "user_from" integer, "message" varchar, "user_to" integer, "inboxes_id" integer, "user_id" integer, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_4837320208"
+FOREIGN KEY ("inboxes_id")
+  REFERENCES "inboxes" ("id")
+, CONSTRAINT "fk_rails_5ec5f5a736"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_inboxes_on_inboxes_id" ON "inboxes" ("inboxes_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_inboxes_on_user_id" ON "inboxes" ("user_id")[0m
+  [1m[36mprimary::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200509232309"]]
+  [1m[35m (8.0ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateMessages (20200509232420)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "messages" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "text" varchar, "messages_id" integer, "mailbox_id" integer, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_08f9778f01"
+FOREIGN KEY ("messages_id")
+  REFERENCES "messages" ("id")
+, CONSTRAINT "fk_rails_51faa60c81"
+FOREIGN KEY ("mailbox_id")
+  REFERENCES "mailboxes" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_messages_on_messages_id" ON "messages" ("messages_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_messages_on_mailbox_id" ON "messages" ("mailbox_id")[0m
+  [1m[36mprimary::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200509232420"]]
+  [1m[35m (7.2ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateOptionDates (20200509232804)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "option_dates" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "day" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mprimary::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200509232804"]]
+  [1m[35m (6.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.2ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2020-06-01 02:27:10.653101"], ["updated_at", "2020-06-01 02:27:10.653101"]]
+  [1m[35m (4.4ms)[0m  [1m[36mcommit transaction[0m
   [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started GET "/" for ::1 at 2020-05-31 22:31:38 -0400
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
   [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by PagesController#home as HTML
+  Rendering pages/home.html.erb within layouts/application
+  Rendered pages/home.html.erb within layouts/application (Duration: 2.8ms | Allocations: 362)
+Completed 200 OK in 44ms (Views: 33.4ms | ActiveRecord: 0.0ms | Allocations: 3421)
+
+
+Started GET "/" for ::1 at 2020-05-31 22:31:42 -0400
+Processing by PagesController#home as HTML
+  Rendering pages/home.html.erb within layouts/application
+  Rendered pages/home.html.erb within layouts/application (Duration: 0.0ms | Allocations: 5)
+Completed 200 OK in 4ms (Views: 2.9ms | ActiveRecord: 0.0ms | Allocations: 1387)
+
+
+Started GET "/" for ::1 at 2020-05-31 22:31:44 -0400
+Processing by PagesController#home as HTML
+  Rendering pages/home.html.erb within layouts/application
+  Rendered pages/home.html.erb within layouts/application (Duration: 0.0ms | Allocations: 5)
+Completed 200 OK in 5ms (Views: 4.0ms | ActiveRecord: 0.0ms | Allocations: 1378)
+
+
+Started GET "/" for ::1 at 2020-05-31 22:31:45 -0400
+Processing by PagesController#home as HTML
+  Rendering pages/home.html.erb within layouts/application
+  Rendered pages/home.html.erb within layouts/application (Duration: 0.0ms | Allocations: 5)
+Completed 200 OK in 3ms (Views: 2.5ms | ActiveRecord: 0.0ms | Allocations: 1378)
+
+
+Started GET "/organization" for ::1 at 2020-05-31 22:31:46 -0400
+  
+ActionController::RoutingError (No route matches [GET] "/organization"):
+  
+actionpack (6.0.2.2) lib/action_dispatch/middleware/debug_exceptions.rb:36:in `call'
+web-console (4.0.1) lib/web_console/middleware.rb:132:in `call_app'
+web-console (4.0.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (4.0.1) lib/web_console/middleware.rb:17:in `catch'
+web-console (4.0.1) lib/web_console/middleware.rb:17:in `call'
+actionpack (6.0.2.2) lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'
+railties (6.0.2.2) lib/rails/rack/logger.rb:38:in `call_app'
+railties (6.0.2.2) lib/rails/rack/logger.rb:26:in `block in call'
+activesupport (6.0.2.2) lib/active_support/tagged_logging.rb:80:in `block in tagged'
+activesupport (6.0.2.2) lib/active_support/tagged_logging.rb:28:in `tagged'
+activesupport (6.0.2.2) lib/active_support/tagged_logging.rb:80:in `tagged'
+railties (6.0.2.2) lib/rails/rack/logger.rb:26:in `call'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (6.0.2.2) lib/action_dispatch/middleware/remote_ip.rb:81:in `call'
+actionpack (6.0.2.2) lib/action_dispatch/middleware/request_id.rb:27:in `call'
+rack (2.2.2) lib/rack/method_override.rb:24:in `call'
+rack (2.2.2) lib/rack/runtime.rb:22:in `call'
+activesupport (6.0.2.2) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (6.0.2.2) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (6.0.2.2) lib/action_dispatch/middleware/static.rb:126:in `call'
+rack (2.2.2) lib/rack/sendfile.rb:110:in `call'
+actionpack (6.0.2.2) lib/action_dispatch/middleware/host_authorization.rb:83:in `call'
+webpacker (4.2.2) lib/webpacker/dev_server_proxy.rb:23:in `perform_request'
+rack-proxy (0.6.5) lib/rack/proxy.rb:57:in `call'
+railties (6.0.2.2) lib/rails/engine.rb:526:in `call'
+puma (4.3.3) lib/puma/configuration.rb:228:in `call'
+puma (4.3.3) lib/puma/server.rb:682:in `handle_request'
+puma (4.3.3) lib/puma/server.rb:472:in `process_client'
+puma (4.3.3) lib/puma/server.rb:328:in `block in run'
+puma (4.3.3) lib/puma/thread_pool.rb:134:in `block in spawn_thread'
+Started GET "/Inboxes/1" for ::1 at 2020-05-31 22:32:02 -0400
+  
+ActionController::RoutingError (No route matches [GET] "/Inboxes/1"):
+  
+actionpack (6.0.2.2) lib/action_dispatch/middleware/debug_exceptions.rb:36:in `call'
+web-console (4.0.1) lib/web_console/middleware.rb:132:in `call_app'
+web-console (4.0.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (4.0.1) lib/web_console/middleware.rb:17:in `catch'
+web-console (4.0.1) lib/web_console/middleware.rb:17:in `call'
+actionpack (6.0.2.2) lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'
+railties (6.0.2.2) lib/rails/rack/logger.rb:38:in `call_app'
+railties (6.0.2.2) lib/rails/rack/logger.rb:26:in `block in call'
+activesupport (6.0.2.2) lib/active_support/tagged_logging.rb:80:in `block in tagged'
+activesupport (6.0.2.2) lib/active_support/tagged_logging.rb:28:in `tagged'
+activesupport (6.0.2.2) lib/active_support/tagged_logging.rb:80:in `tagged'
+railties (6.0.2.2) lib/rails/rack/logger.rb:26:in `call'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (6.0.2.2) lib/action_dispatch/middleware/remote_ip.rb:81:in `call'
+actionpack (6.0.2.2) lib/action_dispatch/middleware/request_id.rb:27:in `call'
+rack (2.2.2) lib/rack/method_override.rb:24:in `call'
+rack (2.2.2) lib/rack/runtime.rb:22:in `call'
+activesupport (6.0.2.2) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (6.0.2.2) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (6.0.2.2) lib/action_dispatch/middleware/static.rb:126:in `call'
+rack (2.2.2) lib/rack/sendfile.rb:110:in `call'
+actionpack (6.0.2.2) lib/action_dispatch/middleware/host_authorization.rb:83:in `call'
+webpacker (4.2.2) lib/webpacker/dev_server_proxy.rb:23:in `perform_request'
+rack-proxy (0.6.5) lib/rack/proxy.rb:57:in `call'
+railties (6.0.2.2) lib/rails/engine.rb:526:in `call'
+puma (4.3.3) lib/puma/configuration.rb:228:in `call'
+puma (4.3.3) lib/puma/server.rb:682:in `handle_request'
+puma (4.3.3) lib/puma/server.rb:472:in `process_client'
+puma (4.3.3) lib/puma/server.rb:328:in `block in run'
+puma (4.3.3) lib/puma/thread_pool.rb:134:in `block in spawn_thread'
+Started GET "/profiles/1" for ::1 at 2020-05-31 22:32:05 -0400
+Processing by ProfilesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mProfile Load (0.2ms)[0m  [1m[34mSELECT "profiles".* FROM "profiles" WHERE "profiles"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/profiles_controller.rb:70:in `set_profile'
+Completed 404 Not Found in 72ms (ActiveRecord: 0.8ms | Allocations: 4844)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Profile with 'id'=1):
+  
+app/controllers/profiles_controller.rb:70:in `set_profile'

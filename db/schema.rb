@@ -10,20 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_19_225339) do
+ActiveRecord::Schema.define(version: 2020_05_09_232804) do
 
-  create_table "comment_replies", force: :cascade do |t|
-    t.text "message"
+  create_table "admin_orgs", force: :cascade do |t|
+    t.string "name"
+    t.string "mail"
     t.integer "user_id", null: false
-    t.integer "comment_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["comment_id"], name: "index_comment_replies_on_comment_id"
-    t.index ["user_id"], name: "index_comment_replies_on_user_id"
+    t.index ["user_id"], name: "index_admin_orgs_on_user_id"
   end
 
   create_table "comments", force: :cascade do |t|
-    t.text "message"
+    t.string "text"
     t.integer "user_id", null: false
     t.integer "event_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -32,87 +31,131 @@ ActiveRecord::Schema.define(version: 2020_04_19_225339) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
-  create_table "date_votes", force: :cascade do |t|
-    t.date "date_voted"
+  create_table "events", force: :cascade do |t|
+    t.string "title"
+    t.string "description"
+    t.string "date"
+    t.string "private"
+    t.integer "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_events_on_user_id"
+  end
+
+  create_table "guests", force: :cascade do |t|
     t.integer "event_id", null: false
     t.integer "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["event_id"], name: "index_date_votes_on_event_id"
-    t.index ["user_id"], name: "index_date_votes_on_user_id"
+    t.index ["event_id"], name: "index_guests_on_event_id"
+    t.index ["user_id"], name: "index_guests_on_user_id"
   end
 
-  create_table "events", force: :cascade do |t|
-    t.string "name"
-    t.string "description"
-    t.string "location"
-    t.date "creation_date"
-    t.date "starting_event_date"
-    t.integer "event_privacy"
-    t.integer "organization_id", null: false
+  create_table "inboxes", force: :cascade do |t|
+    t.integer "user_from"
+    t.string "message"
+    t.integer "user_to"
+    t.integer "inboxes_id"
+    t.integer "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["inboxes_id"], name: "index_inboxes_on_inboxes_id"
+    t.index ["user_id"], name: "index_inboxes_on_user_id"
+  end
+
+  create_table "members", force: :cascade do |t|
+    t.integer "event_id", null: false
     t.integer "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["organization_id"], name: "index_events_on_organization_id"
-    t.index ["user_id"], name: "index_events_on_user_id"
+    t.index ["event_id"], name: "index_members_on_event_id"
+    t.index ["user_id"], name: "index_members_on_user_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.string "text"
+    t.integer "messages_id"
+    t.integer "mailbox_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["mailbox_id"], name: "index_messages_on_mailbox_id"
+    t.index ["messages_id"], name: "index_messages_on_messages_id"
+  end
+
+  create_table "option_dates", force: :cascade do |t|
+    t.string "day"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "organizations", force: :cascade do |t|
     t.string "name"
-    t.string "description"
+    t.integer "admin_org_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["admin_org_id"], name: "index_organizations_on_admin_org_id"
+  end
+
+  create_table "profiles", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "system_admin_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["system_admin_id"], name: "index_profiles_on_system_admin_id"
+    t.index ["user_id"], name: "index_profiles_on_user_id"
+  end
+
+  create_table "replies", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "system_administrators", force: :cascade do |t|
-    t.integer "is_admin"
+  create_table "system_admins", force: :cascade do |t|
     t.integer "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_system_administrators_on_user_id"
-  end
-
-  create_table "user_on_events", force: :cascade do |t|
-    t.integer "status"
-    t.integer "user_id", null: false
-    t.integer "event_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["event_id"], name: "index_user_on_events_on_event_id"
-    t.index ["user_id"], name: "index_user_on_events_on_user_id"
-  end
-
-  create_table "user_on_organizations", force: :cascade do |t|
-    t.integer "user_role"
-    t.integer "organization_id", null: false
-    t.integer "user_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["organization_id"], name: "index_user_on_organizations_on_organization_id"
-    t.index ["user_id"], name: "index_user_on_organizations_on_user_id"
+    t.index ["user_id"], name: "index_system_admins_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "username"
-    t.string "password"
-    t.string "full_name"
-    t.string "email"
-    t.integer "age"
+    t.string "name"
+    t.string "mail"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "comment_replies", "comments"
-  add_foreign_key "comment_replies", "users"
+  create_table "votes", force: :cascade do |t|
+    t.string "date"
+    t.integer "user_id", null: false
+    t.integer "event_id", null: false
+    t.integer "votes_id"
+    t.integer "option_dates_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["event_id"], name: "index_votes_on_event_id"
+    t.index ["option_dates_id"], name: "index_votes_on_option_dates_id"
+    t.index ["user_id"], name: "index_votes_on_user_id"
+    t.index ["votes_id"], name: "index_votes_on_votes_id"
+  end
+
+  add_foreign_key "admin_orgs", "users"
   add_foreign_key "comments", "events"
   add_foreign_key "comments", "users"
-  add_foreign_key "date_votes", "events"
-  add_foreign_key "date_votes", "users"
-  add_foreign_key "events", "organizations"
   add_foreign_key "events", "users"
-  add_foreign_key "system_administrators", "users"
-  add_foreign_key "user_on_events", "events"
-  add_foreign_key "user_on_events", "users"
-  add_foreign_key "user_on_organizations", "organizations"
-  add_foreign_key "user_on_organizations", "users"
+  add_foreign_key "guests", "events"
+  add_foreign_key "guests", "users"
+  add_foreign_key "inboxes", "inboxes", column: "inboxes_id"
+  add_foreign_key "inboxes", "users"
+  add_foreign_key "members", "events"
+  add_foreign_key "members", "users"
+  add_foreign_key "messages", "mailboxes"
+  add_foreign_key "messages", "messages", column: "messages_id"
+  add_foreign_key "organizations", "admin_orgs"
+  add_foreign_key "profiles", "system_admins"
+  add_foreign_key "profiles", "users"
+  add_foreign_key "system_admins", "users"
+  add_foreign_key "votes", "events"
+  add_foreign_key "votes", "option_dates", column: "option_dates_id"
+  add_foreign_key "votes", "users"
+  add_foreign_key "votes", "votes", column: "votes_id"
 end

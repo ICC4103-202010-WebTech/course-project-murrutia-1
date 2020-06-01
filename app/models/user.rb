@@ -1,22 +1,27 @@
-class EmailValidator < ActiveModel::EachValidator
-  def validate_each(record,attribute,value)
-    unless value =~ /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
-      record.errors[attribute] << (options[:message] || "is not an email")
-    end
-  end
-end
-
-
 class User < ApplicationRecord
-  validates :username, presence: true, uniqueness: true
-  validates :email, presence: true, uniqueness: true, email: true
-
   has_many :comments, dependent: :destroy
-  has_many :comment_replies, dependent: :destroy
-  has_many :date_votes, dependent: :destroy
-  has_one :system_administrator, dependent: :destroy
-  has_many :user_on_organizations
-  has_many :user_on_events, dependent: :destroy
-  has_many :organizations, through: :user_on_organizations
-  has_many :events, through: :user_on_events
+  has_many :events, dependent: :destroy
+  has_many :guests, dependent: :destroy
+  has_many :members, dependent: :destroy
+  has_many :votes, dependent: :destroy
+  has_many :messages#, dependent: :destroy se deben quedar
+  has_many :replies, dependent: :destroy
+  has_one :profile, dependent: :destroy
+  has_one :inbox, dependent: :destroy
+  has_one :organization, dependent: :destroy
+
+  validates :mail, format: /\w+@\w+\.{1}[a-zA-Z]{2,}/ #generic format
+  validates :name, :mail, presence: true, uniqueness: true
+  after_create :create_inbox
+  after_create :create_profile
+
+  private
+  def create_inbox
+    Inbox.create!(user_id: self.id)
+  end
+
+  def create_profile
+    Profile.create!(user_id: self.id)
+  end
+
 end

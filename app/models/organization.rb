@@ -1,6 +1,7 @@
 class Organization < ApplicationRecord
-
-  has_many :user_on_organizations, dependent: :destroy
-  has_many :users, through: :user_on_organizations
+  belongs_to :admin_org
   has_many :events, dependent: :destroy
+  has_many :members, dependent: :destroy
+
+  validates :name, presence: true
 end
