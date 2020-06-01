@@ -1,0 +1,50 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Users</h1>
+
+<style>
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 50%;
+  }
+  td, th {
+    border: 1px solid #000000;
+    text-align: left;
+    padding: 8px;
+  }
+  tr:nth-child(even) {
+    background-color: #943B6D;
+  }
+  tr:nth-child(odd) {
+    background-color: #943B6D;
+  }
+  th {
+    background-color: #2b2b2b;
+    color: white;
+  }
+</style>
+
+<table>
+  <thead>
+  <tr>
+    <th>Username</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Age</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @users.each do |user| %>
+    <tr>
+      <td><%= link_to user.username , user %></td>
+      <td><%= user.full_name %></td>
+      <td><%= user.email %></td>
+      <td><%= user.age %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<br>

@@ -1,0 +1,66 @@
+<p id="notice"><%= notice %></p>
+
+<aside style="float: right; padding-right: 20px">
+  <% if @event.id == 1 %>
+    <img class="flex-image3" src="https://envato-shoebox-0.imgix.net/91bb/6609-6616-4732-8a3b-a647db761e6c/ML1A3899+copy.jpg?auto=compress%2Cformat&fit=max&mark=https%3A%2F%2Felements-assets.envato.com%2Fstatic%2Fwatermark2.png&markalign=center%2Cmiddle&markalpha=18&w=700&s=1949d3660da0ca9d9a6352698b404b7e">
+  <% end %>
+  <% if @event.id == 2 %>
+    <img class="flex-image3" src="https://blogmedia.evbstatic.com/wp-content/uploads/wpmulti/sites/8/shutterstock_199419065.jpg">
+  <% end %>
+  <% if @event.id == 3 %>
+    <img class="flex-image3" src="https://www.artsatl.org/wp-content/uploads/unnamed-96.jpg">
+  <% end %>
+  <% if @event.id == 4 %>
+    <img class="flex-image3" src="https://majomontemayor.com/wp-content/uploads/2019/09/Ultra-Miami.jpg">
+  <% end %>
+  <% if @event.id == 5 %>
+    <img class="flex-image3" src="https://www.cronista.com/__export/1581606737666/sites/diarioelcronista/img/2020/02/13/lolla.jpg_1866758231.jpg">
+  <% end %>
+  <% if @event.id == 6 %>
+    <img class="flex-image3" src="https://lh3.googleusercontent.com/proxy/s5s8k_o_YeOAkhRINANtMysqXauEjY0ir1JzQaZX-9YWn1uG64hi9Tnu-s7KIwijvBwqQzDD5gWsWUx-uTfCiVL6wS3UlWyc4C1vuC1V7Bmu07jWzgo">
+  <% end %>
+  <% if @event.id == 7 %>
+    <img class="flex-image3" src="https://eldiario.deljuego.com.ar/images/stories/Notas/00__2012/02Febrero/08-14/kino-sin-ganadores_84924.jpg">
+  <% end %>
+</aside>
+
+<h2>Event Info:</h2>
+<p>Name: <%= @event.name %>
+  <br>Description: <%= @event.description %>
+  <br>Address: <%= @event.location %>
+  <br>Creation date: <%= @event.creation_date %>
+  <br>Date: <%= @event.starting_event_date %>
+  <br>Privacy:
+  <% if @event.event_privacy == 1 %>
+    <%= "Private" %>
+  <% else %>
+    <%= "Public" %>
+  <% end %>
+</p>
+
+<h3>Comments:</h3>
+<p>
+  <% @event.comments.each do |comment| %>
+    <tr>
+    <p>
+      <%= comment.user.username %>:
+      <%= comment.message %>
+      <% @event.comment_replies.each do |reply| %>
+        <tr>
+        <p>
+          <% if reply.comment.id == comment.id %>
+            ->   <%=reply.user.username %>:
+            <%= reply.message %>
+          <% end %>
+
+        </p>
+        </tr>
+      <% end %>
+      </p>
+      </tr>
+  <% end %>
+  </p>
+
+
+  <!%= link_to 'Edit', edit_event_path(@event) %>
+  <%= link_to 'Back', events_path %>

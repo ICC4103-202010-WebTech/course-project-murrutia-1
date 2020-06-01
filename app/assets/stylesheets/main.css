@@ -1,0 +1,152 @@
+/*
+*= require_tree .
+*= require_self
+   */
+@import "bootstrap";
+@import "tether.css";
+html, body {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+a {
+    color: #ff2121;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #ff5a19;
+}
+
+header {
+    background: url(https://www.exitfest.org/wp-content/uploads/2018/03/01_Silent-Disco.jpg);
+    background-size: contain;
+    padding: 2em;
+    height: 80px;
+}
+
+header figure {
+    margin-top: 0px;
+    margin-left: 0px;
+    float: left;
+    width: 100px;
+    height: 100px;
+    background: url(https://partyflock.nl/images/organization/11428_2048x2048_486817/RV-Events.png);
+    background-size: contain;
+    border-radius: 100px;
+}
+
+div#container {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-grow: 1;
+}
+
+aside#customer_info {
+    width: 10%;
+    color: blue;
+    background-color: #24292D;
+    padding: 1em;
+}
+
+main {
+    width: 90%;
+    overflow: auto;
+    color: white;
+    background: #a2a2a2;
+    padding: 1em;
+}
+
+footer {
+    color: black;
+    position: relative;
+    background: #5E2542;
+    padding: 1em;
+    height: 110px;
+    clear: both;
+    bottom: 0;
+}
+
+ul#navbar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #5E2542;
+}
+
+
+ul#navbar li {
+    float: left;
+}
+
+ul#navbar li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+ul#navbar li a:hover {
+    background-color: #24292D;
+}
+
+td, th {
+    padding: 0.2em;
+    text-align: left;
+}
+
+.flex-container {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-around;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.flex-item{
+    display: inline;
+    background: #24292D;
+    padding-left: 30px;
+    width: available;
+    height: auto;
+    margin-top: 10px;
+    line-height: 60px;
+    color: white;
+    font-weight: bold;
+    font-size: 2em;
+    text-align: left;
+}
+
+.flex-image{
+    padding-top: 10px;
+    padding-left: 10px;
+    height: 100px;
+    width: 100px;
+}
+.flex-image2{
+    padding-top: 10px;
+    padding-left: 10px;
+    height: 200px;
+}
+.flex-image3 {
+    padding-top: 10px;
+    padding-left: 10px;
+    height: 400px
+}
+img {
+    height: 100px;
+}
+li{
+    display: inline;
+}

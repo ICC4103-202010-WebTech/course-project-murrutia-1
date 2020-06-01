@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<aside style="float: right; padding-right: 20px">
+
+  <% if @organization.id == 1 %>
+    <img class="flex-image3" src="https://www.uandes.cl/extra/imagen-corporativa/marca-uandes/Marca_vertical.jpg">
+  <% end %>
+  <% if @organization.id == 2 %>
+    <img class="flex-image3" src="https://image.freepik.com/free-vector/web-tech-letter-w-logo_1438-434.jpg">
+  <% end %>
+  <% if @organization.id == 3 %>
+    <img class="flex-image3" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Asociaci%C3%B3n_Nacional_de_F%C3%BAtbol_Profesional_de_Chile.png/1024px-Asociaci%C3%B3n_Nacional_de_F%C3%BAtbol_Profesional_de_Chile.png">
+  <% end %>
+  <% if @organization.id == 4 %>
+    <img class="flex-image3" src="https://sembremsoama.cf/static//2018/05/marketing-blog.jpg">
+  <% end %>
+  <% if @organization.id == 5 %>
+    <img class="flex-image3" src="https://www.loteria.cl/absolutenm/articlefiles/811-SORPRESA_KINO1.jpg">
+  <% end %>
+  <% if @organization.id == 6 %>
+    <img style="height: 300px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/UFC_logo.svg/1280px-UFC_logo.svg.png">
+  <% end %>
+</aside>
+
+<h2>Organization Info:</h2>
+<p>Name: <%= @organization.name %>
+  <br>Description: <%= @organization.description %>
+</p>
+
+<!%= link_to 'Edit', edit_organization_path(@organization) %>
+<%= link_to 'Back', organizations_path %>
