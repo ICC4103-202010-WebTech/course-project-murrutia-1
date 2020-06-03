@@ -10,9 +10,6 @@ class OrganizationsController < ApplicationController
   # GET /organizations/1
   # GET /organizations/1.json
   def show
-    @organization = Organization.where(event_id: params[:event_id], event_private: "public")
-    @event = Organization.first.events
-    @admin = Admin_org.includes(:user, :admin_org).where(user_id: params[:id])
   end
 
   # GET /organizations/new

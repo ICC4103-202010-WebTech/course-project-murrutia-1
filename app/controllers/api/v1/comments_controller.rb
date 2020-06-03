@@ -1,77 +1,66 @@
-class API::V1::CommentsController < ApiController
-  before_action :set_api_v1_comment, only: [:show, :edit, :update, :destroy]
+class API::V1::CommentsController < APIController
+  before_action :set_comment, only: [:show, :edit, :update, :destroy]
 
-  # GET /api/v1/comments
-  # GET /api/v1/comments.json
+  # GET /comments
+  # GET /comments.json
   def index
-    @comments = Comment.where(event_id: params[:event_id])
+    @comments = Comment.all
   end
 
-  # GET /api/v1/comments/1
-  # GET /api/v1/comments/1.json
+  # GET /comments/1
+  # GET /comments/1.json
   def show
   end
 
-  # GET /api/v1/comments/new
+  # GET /comments/new
   def new
-    @api_v1_comment = Comment.new
+    @comment = Comment.new
   end
 
-  # GET /api/v1/comments/1/edit
+  # GET /comments/1/edit
   def edit
-    @comment = Comment.find(params[:id])
   end
 
-  # POST /api/v1/comments
-  # POST /api/v1/comments.json
+  # POST /comments
+  # POST /comments.json
   def create
     @comment = Comment.new(comment_params)
-    @comment.user = User.find(params[:user_id])
     @comment.event = Event.find(params[:event_id])
-
-    respond_to do |format|
-      if @comment.save
-        format.html { redirect_to @comment, notice: 'Comment was successfully created.' }
-        format.json { render :show, status: :created, location: @comment }
-      else
-        format.html { render :new }
-        format.json { render json: @comment.errors, status: :unprocessable_entity }
-      end
+    @comment.user = User.find(params[:user_id])
+    if @comment.save
+      render :show, status: :created, location: @comment
+    else
+      render json: @comment.errors, status: :unprocessable_entity
     end
   end
 
-  # PATCH/PUT /api/v1/comments/1
-  # PATCH/PUT /api/v1/comments/1.json
+  # PATCH/PUT /comments/1
+  # PATCH/PUT /comments/1.json
   def update
-    respond_to do |format|
-      if @comment.update(api_v1_comment_params)
-        format.html { redirect_to @comment, notice: 'Comment was successfully updated.' }
-        format.json { render :show, status: :ok, location: @comment }
-      else
-        format.html { render :edit }
-        format.json { render json: @comment.errors, status: :unprocessable_entity }
-      end
+    if @comment.update(comment_params)
+      render :show, status: :ok, location: @comment
+    else
+      render :edit
+      render json: @comment.errors, status: :unprocessable_entity
     end
   end
 
-  # DELETE /api/v1/comments/1
-  # DELETE /api/v1/comments/1.json
+  # DELETE /comments/1
+  # DELETE /comments/1.json
   def destroy
-    @comment.destroy
-    respond_to do |format|
-      format.html { redirect_to comments_url, notice: 'Comment was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+
+  @comment.destroy
+    head :no_content
   end
 
   private
-  # Use callbacks to share common setup or constraints between actions.
-  def set_comment
-    @comment = Comment.find(params[:id])
-  end
+    # Use callbacks to share common setup or constraints between actions.
+    def set_comment
+      @comment = Comment.find(params[:id])
+    end
 
-  # Only allow a list of trusted parameters through.
-  def comment_params
-    params.fetch(:comment, {}).permit(:id, :user, :event, :text)
-  end
+    # Only allow a list of trusted parameters through.
+    def comment_params
+      params.fetch(:comment, {}).permit(:message)
+    end
 end

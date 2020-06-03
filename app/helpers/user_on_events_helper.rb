@@ -1,0 +1,2 @@
+module UserOnEventsHelper
+end

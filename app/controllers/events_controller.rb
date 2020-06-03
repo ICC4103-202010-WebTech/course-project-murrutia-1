@@ -10,11 +10,9 @@ class EventsController < ApplicationController
   # GET /events/1
   # GET /events/1.json
   def show
-    @event = Event.find(params[:id])
-    @comments = @event.comment
-    @votes = Vote.where(event_id: params[:id]).limit(1)
-    @guests = @event.guests
-    @date_options = @event.option_date
+    @comments = Comment.all
+    @user = User
+    @comment_replies = CommentReply
   end
 
   # GET /events/new
@@ -24,7 +22,6 @@ class EventsController < ApplicationController
 
   # GET /events/1/edit
   def edit
-    @event = Event.find(params[:id])
   end
 
   # POST /events

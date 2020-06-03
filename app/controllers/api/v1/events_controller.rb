@@ -1,42 +1,36 @@
-class API::V1::EventsController < ApiController
-  before_action :set_api_v1_event, only: [:show, :edit, :update, :destroy]
+class API::V1::EventsController < APIController
+  before_action :set_event, only: [:show, :edit, :update, :destroy]
 
-  # GET /api/v1/events
-  # GET /api/v1/events.json
+  # GET /events
+  # GET /events.json
   def index
     @events = Event.all
   end
 
-  # GET /api/v1/events/1
-  # GET /api/v1/events/1.json
+  # GET /events/1
+  # GET /events/1.json
   def show
   end
 
-  # GET /api/v1/events/new
+  # GET /events/new
   def new
     @event = Event.new
   end
 
-  # GET /api/v1/events/1/edit
+  # GET /events/1/edit
   def edit
   end
 
-  # POST /api/v1/events
-  # POST /api/v1/events.json
+  # POST /events
+  # POST /events.json
   def create
     @event = Event.new(event_params)
     @event.user = User.find(params[:user_id])
-
-    respond_to do |format|
+    @event.organization = Organization.find(params[:organization_id])
     if @event.save
-      format.html { redirect_to @event, notice: 'Event was successfully created.' }
-      format.json { render :show, status: :created, location: @event }
       render :show, status: :created, location: @event
     else
-      format.html { render :new }
-      format.json { render json: @event.errors, status: :unprocessable_entity }
       render json: @event.errors, status: :unprocessable_entity
-    end
     end
   end
 
@@ -44,18 +38,10 @@ class API::V1::EventsController < ApiController
   # PATCH/PUT /events/1.json
   def update
     if @event.update(event_params)
-      render :show, status: :ok, location: api_v1_event_path(@event)
+      render :show, status: :ok, location: @event
     else
+      render :edit
       render json: @event.errors, status: :unprocessable_entity
-    end
-     respond_to do |format|
-    if @event.update(event_params)
-       format.html { redirect_to @event, notice: 'Event was successfully updated.' }
-       format.json { render :show, status: :ok, location: @event }
-     else
-       format.html { render :edit }
-       format.json { render json: @event.errors, status: :unprocessable_entity }
-     end
     end
   end
 
@@ -63,22 +49,18 @@ class API::V1::EventsController < ApiController
   # DELETE /events/1.json
   def destroy
     @event.destroy
+    redirect_to events_url, notice: 'Event was successfully destroyed.'
     head :no_content
-    respond_to do |format|
-     format.html { redirect_to events_url, notice: 'Event was successfully destroyed.' }
-     format.json { head :no_content }
-    end
   end
 
   private
-  # Use callbacks to share common setup or constraints between actions.
-  def set_event
-    @event = Event.find(params[:id])
-  end
+    # Use callbacks to share common setup or constraints between actions.
+    def set_event
+      @event = Event.find(params[:id])
+    end
 
-  # Only allow a list of trusted parameters through.
-  def event_params
-    #params.fetch(:event, {})
-    params.fetch(:event, {}).permit(:id, :title, :description, :user, :private)
-  end
+    # Only allow a list of trusted parameters through.
+    def event_params
+      params.fetch(:event, {}).permit(:name, :description, :event_privacy, :user_id, :organization_id)
+    end
 end

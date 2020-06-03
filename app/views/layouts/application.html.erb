@@ -1,35 +1,41 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Events app</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
 
+<head>
+  <title> Events App</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-  </head>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
 
-  <body>
+<header>
+  <figure></figure>
+  <h1 style="color: white;">Events App</h1>
+</header>
 
-  <header>
-    <h1><%= link_to "Events App", root_path %></h1>
-  </header>
+<nav>
+  <ul id="navbar">
+    <li><a <%= link_to 'Users', users_path %></a></li>
+    <li><a <%= link_to 'Profile', user_path(1) %></a></li>
+    <li><a <%= link_to 'Events', events_path %></a></li>
+    <li><a <%= link_to 'Organizations', organizations_path %></a></li>
+  </ul>
+</nav>
 
-  <nav>
-    <ul class = "navigation">
-      <li class="nav-item"><a><%= link_to 'Organization', '/organization' %></a></li>
-      <li class="nav-item"><a><%= link_to 'Inbox', '/Inboxes/1' %></a></li>
-      <li class="nav-item"><a><%= link_to 'Profile', '/profiles/1' %></a></li>
-      <li class="nav-item"><a class ="logout"><%= link_to 'Log Out', root_path %></a></li>
-    </ul>
-  </nav>
-
-  <main id="main_content">
+<body>
+<div id="container">
+  <aside id="customer_info">
+    <li><a <%= link_to "Back to home", root_path %></a></li>
+  </aside>
+  <main>
     <%= yield %>
   </main>
+</div>
+</body>
 
-  <footer>
-    <p> Developed by Martin Urrutia</p>
-  </footer>
-
-  </body>
+<footer>
+  <p>Developed by Martin Urrutia</p>
+</footer>
 </html>

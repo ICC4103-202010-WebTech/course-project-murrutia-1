@@ -1,30 +1,32 @@
 <p id="notice"><%= notice %></p>
 
-<<h2>Organizations</h2>
+<h1>Organizations</h1>
 
-<table>
-  <tbody>
-  <% @organizations.each_with_index do |organization| %>
-    <tr>
-      <td><%= link_to organization.name, organization_path(organization.id) %></td>
-    </tr>
-  <% end %>
-  </tbody>
-</table>
+<% @organizations.each do |org| %>
 
-<table>
-  <tbody>
-    <% @organizations.each do |organization| %>
-      <tr>
-        <td><%= link_to 'Show', organization %></td>
-        <td><%= link_to 'Edit', edit_organization_path(organization) %></td>
-        <td><%= link_to 'Destroy', organization, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+  <ul class="flex-container">
+    <li class="flex-item">
+      Name: <%= link_to  org.name, org %><br>
+      Description: <%= org.description %><br>
+      <aside style="float: right; padding-right: 20px">
 
+        <% if org.id == 1 %>
+          <img class="flex-image2" src="https://www.uandes.cl/extra/imagen-corporativa/marca-uandes/Marca_vertical.jpg">
+        <% end %>
+        <% if org.id == 2 %>
+          <img class="flex-image2" src="https://image.freepik.com/free-vector/web-tech-letter-w-logo_1438-434.jpg">
+        <% end %>
+        <% if org.id == 3 %>
+          <img class="flex-image2" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Asociaci%C3%B3n_Nacional_de_F%C3%BAtbol_Profesional_de_Chile.png/1024px-Asociaci%C3%B3n_Nacional_de_F%C3%BAtbol_Profesional_de_Chile.png">
+        <% end %>
+        <% if org.id == 4 %>
+          <img class="flex-image2" src="https://sembremsoama.cf/static//2018/05/marketing-blog.jpg">
+        <% end %>
+        <% if org.id == 5 %>
+          <img class="flex-image2" src="https://www.loteria.cl/absolutenm/articlefiles/811-SORPRESA_KINO1.jpg">
+        <% end %>
+      </aside>
+    </li>
+  </ul>
+<% end %>
 <br>
-
-<%= link_to 'New Organization', new_organization_path %>
-<%= link_to 'Back to home', root_path %>
