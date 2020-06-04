@@ -5,28 +5,40 @@ class EventsController < ApplicationController
   # GET /events.json
   def index
     @events = Event.all
+    @current_user = current_user
   end
 
   # GET /events/1
   # GET /events/1.json
   def show
+    @useronevent = UserOnEvent.all
+    @current_user = current_user
     @comments = Comment.all
     @user = User
+    @user = User.all
     @comment_replies = CommentReply
   end
 
   # GET /events/new
   def new
+    @current_user = current_user
+    @event = Event.new
+  end
+
+  def invite
+    @current_user = current_user
     @event = Event.new
   end
 
   # GET /events/1/edit
   def edit
+    @current_user = current_user
   end
 
   # POST /events
   # POST /events.json
   def create
+    @current_user = current_user
     @event = Event.new(event_params)
 
     respond_to do |format|
@@ -43,6 +55,7 @@ class EventsController < ApplicationController
   # PATCH/PUT /events/1
   # PATCH/PUT /events/1.json
   def update
+    @current_user = current_user
     respond_to do |format|
       if @event.update(event_params)
         format.html { redirect_to @event, notice: 'Event was successfully updated.' }
@@ -65,13 +78,17 @@ class EventsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_event
-      @event = Event.find(params[:id])
-    end
+  def current_user
+    @current_user = User.first
+  end
 
-    # Only allow a list of trusted parameters through.
-    def event_params
-      params.fetch(:event, {})
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_event
+    @event = Event.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def event_params
+    params.fetch(:event, {}).permit(:name, :description, :location, :starting_event_date, :event_privacy, :organization_id, :flyer, :user_id, :files)
+  end
 end

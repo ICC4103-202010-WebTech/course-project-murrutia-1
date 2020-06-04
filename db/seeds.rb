@@ -34,8 +34,8 @@ event5 = Event.create(name: "Race", description: "The final", location: "Viña d
 organization1.events << event1
 organization2.events << event2
 organization3.events << event3
-organization2.events << event4
-organization1.events << event5
+organization4.events << event4
+organization5.events << event5
 
 useronorg1 = UserOnOrganization.create(user_role: 0, user: user1, organization: organization1)
 useronorg2 = UserOnOrganization.create(user_role: 1, user: user1, organization: organization2)

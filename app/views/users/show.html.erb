@@ -1,13 +1,36 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Profile of <%= @user.username  %></h1>
-<img class="flex-image2" src="https://www.madrimasd.org/blogs/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png">
+<% if @user.flyer.attached? %>
+  <%= image_tag(@user.flyer, class: "flex-image2", data: {target: "#myModal", toggle: "modal"}) %>
+<% else %>
+  <img class="flex-image2" src="https://www.madrimasd.org/blogs/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png">
+<% end %>
 <p>
+  <br>id: <%= @user.id %>
   <br>Full Name: <%= @user.full_name %>
   <br>Age: <%= @user.age %>
   <br>Email: <%= @user.email %>
 </p>
 
+<h4> Your invitations:</h4>
+<% @useronevent.each do |user| %>
+  <% if user.user_id == @user.id %>
+    <% @event.each do |event| %>
+      <% if user.event_id == event.id %>
+        - <%= link_to event.name, event %><br>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
 
-<!%= link_to 'Edit', edit_user_path(@user) %>
+<h4> Events you have created:</h4>
+  <% @event.each do |event| %>
+  <% if event.user_id == @user.id %>
+    - <%= link_to event.name, event %><br>
+  <% end %>
+<% end %>
+
+<br>
+<%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>

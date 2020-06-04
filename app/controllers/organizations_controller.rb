@@ -10,6 +10,7 @@ class OrganizationsController < ApplicationController
   # GET /organizations/1
   # GET /organizations/1.json
   def show
+    @event = Event.all
   end
 
   # GET /organizations/new
@@ -69,6 +70,6 @@ class OrganizationsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def organization_params
-      params.fetch(:organization, {})
+      params.fetch(:organization, {}).permit(:flyer, :name, :description)
     end
 end

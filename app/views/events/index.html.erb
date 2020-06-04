@@ -2,34 +2,13 @@
 
 <h1>Events</h1>
 
+<div class="row ml-0 mt-2 mb-3">
+  <button><%= link_to "Add a new event", new_event_path, class: ["btn", "btn-primary"] %></button>
+</div>
 
-<% @events.each do |event| %>
-
-  <ul class="flex-container">
-    <li class="flex-item">
-      Name: <%= link_to  event.name, event %><br>
-      Description: <%= event.description %><br>
-      Address: <%= event.location %><br>
-      Date: <%= event.starting_event_date %>
-      <aside style="float: right; padding-right: 20px">
-        <% if event.id == 1 %>
-          <img class="flex-image2" src="https://envato-shoebox-0.imgix.net/91bb/6609-6616-4732-8a3b-a647db761e6c/ML1A3899+copy.jpg?auto=compress%2Cformat&fit=max&mark=https%3A%2F%2Felements-assets.envato.com%2Fstatic%2Fwatermark2.png&markalign=center%2Cmiddle&markalpha=18&w=700&s=1949d3660da0ca9d9a6352698b404b7e">
-        <% end %>
-        <% if event.id == 2 %>
-          <img class="flex-image2" src="https://blogmedia.evbstatic.com/wp-content/uploads/wpmulti/sites/8/shutterstock_199419065.jpg">
-        <% end %>
-        <% if event.id == 3 %>
-          <img class="flex-image2" src="https://www.artsatl.org/wp-content/uploads/unnamed-96.jpg">
-        <% end %>
-        <% if event.id == 4 %>
-          <img class="flex-image2" src="https://majomontemayor.com/wp-content/uploads/2019/09/Ultra-Miami.jpg">
-        <% end %>
-        <% if event.id == 5 %>
-          <img class="flex-image2" src="https://www.cronista.com/__export/1581606737666/sites/diarioelcronista/img/2020/02/13/lolla.jpg_1866758231.jpg">
-        <% end %>
-      </aside>
-    </li>
-  </ul>
-<% end %>
-
+<div class="flex-container">
+  <% @events.each do |event| %>
+    <%= render partial: 'event_tile', locals: { event: event } %>
+  <% end %>
+</div>
 <br>

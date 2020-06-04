@@ -2,6 +2,10 @@
 
 <h1>Organizations</h1>
 
+<div class="row ml-0 mt-2 mb-3">
+  <button><%= link_to "Add a new organization", new_organization_path, class: ["btn", "btn-primary"] %></button>
+</div>
+
 <% @organizations.each do |org| %>
 
   <ul class="flex-container">
@@ -10,20 +14,10 @@
       Description: <%= org.description %><br>
       <aside style="float: right; padding-right: 20px">
 
-        <% if org.id == 1 %>
-          <img class="flex-image2" src="https://www.uandes.cl/extra/imagen-corporativa/marca-uandes/Marca_vertical.jpg">
-        <% end %>
-        <% if org.id == 2 %>
-          <img class="flex-image2" src="https://image.freepik.com/free-vector/web-tech-letter-w-logo_1438-434.jpg">
-        <% end %>
-        <% if org.id == 3 %>
-          <img class="flex-image2" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Asociaci%C3%B3n_Nacional_de_F%C3%BAtbol_Profesional_de_Chile.png/1024px-Asociaci%C3%B3n_Nacional_de_F%C3%BAtbol_Profesional_de_Chile.png">
-        <% end %>
-        <% if org.id == 4 %>
-          <img class="flex-image2" src="https://sembremsoama.cf/static//2018/05/marketing-blog.jpg">
-        <% end %>
-        <% if org.id == 5 %>
-          <img class="flex-image2" src="https://www.loteria.cl/absolutenm/articlefiles/811-SORPRESA_KINO1.jpg">
+        <% if org.flyer.attached? %>
+          <%= image_tag(org.flyer, class: "flex-image2", data: { target: "#myModal", toggle: "modal"}) %>
+        <% else %>
+          <%= image_tag("thumbnail.svg", class: "flex-image2") %>
         <% end %>
       </aside>
     </li>

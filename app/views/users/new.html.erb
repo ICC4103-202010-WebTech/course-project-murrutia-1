@@ -1,5 +1,11 @@
-<h1>New User</h1>
-
-<%= render 'form', user: @user %>
-
-<%= link_to 'Back', users_path %>
+<div class="row ml-0 mt-3">
+  <h2>New User</h2>
+</div>
+<div class="row ml-0 mt-2">
+  <p>Please enter the required information to create a new User:</p>
+</div>
+<%= render partial: "form",
+           locals: {
+               user: @user,
+               submit_tag: "Create"
+           } %>

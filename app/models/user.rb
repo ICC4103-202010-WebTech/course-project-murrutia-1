@@ -11,6 +11,7 @@ class User < ApplicationRecord
   validates :username, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true, email: true
 
+  has_one_attached :flyer
   has_many :comments, dependent: :destroy
   has_many :comment_replies, dependent: :destroy
   has_many :date_votes, dependent: :destroy

@@ -1,25 +1,15 @@
 <p id="notice"><%= notice %></p>
 
 <aside style="float: right; padding-right: 20px">
-  <% if @event.id == 1 %>
-    <img class="flex-image3" src="https://envato-shoebox-0.imgix.net/91bb/6609-6616-4732-8a3b-a647db761e6c/ML1A3899+copy.jpg?auto=compress%2Cformat&fit=max&mark=https%3A%2F%2Felements-assets.envato.com%2Fstatic%2Fwatermark2.png&markalign=center%2Cmiddle&markalpha=18&w=700&s=1949d3660da0ca9d9a6352698b404b7e">
-  <% end %>
-  <% if @event.id == 2 %>
-    <img class="flex-image3" src="https://blogmedia.evbstatic.com/wp-content/uploads/wpmulti/sites/8/shutterstock_199419065.jpg">
-  <% end %>
-  <% if @event.id == 3 %>
-    <img class="flex-image3" src="https://www.artsatl.org/wp-content/uploads/unnamed-96.jpg">
-  <% end %>
-  <% if @event.id == 4 %>
-    <img class="flex-image3" src="https://majomontemayor.com/wp-content/uploads/2019/09/Ultra-Miami.jpg">
-  <% end %>
-  <% if @event.id == 5 %>
-    <img class="flex-image3" src="https://www.cronista.com/__export/1581606737666/sites/diarioelcronista/img/2020/02/13/lolla.jpg_1866758231.jpg">
+  <% if @event.flyer.attached? %>
+    <%= image_tag(@event.flyer, class: "flex-image3", data: {target: "#myModal", toggle: "modal"}) %>
+  <% else %>
+    <%= image_tag("thumbnail.svg", class: "flex-image3") %>
   <% end %>
 </aside>
 
-<h2>Event Info:</h2>
-<p>Name: <%= @event.name %>
+<h2><%= @event.name %></h2>
+<p>Event info:        <button><%= link_to 'Edit', edit_event_path(@event) %></button>
   <br>Description: <%= @event.description %>
   <br>Address: <%= @event.location %>
   <br>Creation date: <%= @event.creation_date %>
@@ -32,6 +22,19 @@
   <% end %>
 </p>
 
+<p>
+<h3>Guest List:</h3>
+<% @useronevent.each do |event| %>
+  <% if event.event_id == @event.id %>
+    <% @user.each do |user| %>
+      <% if user.id == event.user_id %>
+        - <%= user.full_name %><br>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
+</p>
+
 <h3>Comments:</h3>
 <p>
   <% @event.comments.each do |comment| %>
@@ -39,14 +42,16 @@
     <p>
       <%= comment.user.username %>:
       <%= comment.message %>
+      <% if @current_user.id == comment.user.id %>
+        <%= link_to 'Edit', edit_comment_path(comment) %>
+      <% end %>
       <% @event.comment_replies.each do |reply| %>
         <tr>
         <p>
           <% if reply.comment.id == comment.id %>
-            Reply of   <%=reply.user.username %>:
+            reply of <%= reply.user.username %>:
             <%= reply.message %>
           <% end %>
-
         </p>
         </tr>
       <% end %>
@@ -54,7 +59,41 @@
       </tr>
   <% end %>
   </p>
+  <p><%= link_to '- New Comment -', new_comment_path(@comment) %> </p>
+  <br>
 
+  <% if @event.files.attached? %>
+    <% @event.files.each do |file| %>
+      <br><%= image_tag(file, class: "flex-image2", data: {target: "#myModal", toggle: "modal"}) %><br>
+    <% end %>
+  <% end %>
 
-  <!%= link_to 'Edit', edit_event_path(@event) %>
-  <%= link_to 'Back', events_path %>
+  <br>
+  <%= form_with model: @event, local: true do |form| %>
+    <%= errors_for @event %>
+    <div class="form-group">
+      <%= form.label :Upload_Files %>
+      <br>
+      <%= form.file_field :files %>
+    </div>
+    <div class="form-group mt-2">
+      <%= form.submit "Upload", class: ["btn", "btn-primary"] %>
+    </div>
+  <% end %>
+  <br>
+  <h4>Invite people to "<%=@event.name%>":</h4>
+  <div class="row ml-0">
+    <%= form_with model: @event, local: true do |form| %>
+      <%= errors_for @event %>
+      <div class="form-group">
+        <%= form.label :user %>
+        <%= form.collection_select(:user_id, User.all.order(name: :asc), :id, :username, {}, {class: "form-control"}) %>
+      </div>
+      <br>
+      <div class="form-group mt-2">
+        <%= form.submit "Invite", class: ["btn", "btn-primary"] %>
+      </div>
+    <% end %>
+  </div>
+  <br>
+  <%= link_to 'Back', :back %>

@@ -19,19 +19,20 @@ body {
 }
 
 a {
-    color: darkslateblue;
+    color: #2b2b2b;
     text-decoration: none;
 }
 
 a:hover {
-    color: #ff5a19;
+    color: #2b2b2b;
+
 }
 
 header {
-    background-color: darkslateblue;
+    background: #EFEFEF;
     background-size: contain;
-    padding: 2.3em;
-    height: 30px;
+
+    height: 70px;
 }
 
 div#container {
@@ -51,7 +52,7 @@ main {
     width: 100%;
     overflow: auto;
     color: white;
-    background: #a2a2a2;
+    background: darkolivegreen;
     padding: 1em;
 }
 
@@ -99,7 +100,7 @@ td, th {
     display: flex;
     flex-flow: column;
     justify-content: space-around;
-    background: darkgoldenrod;
+    background: darkslateblue;
     padding: 0;
     margin: 0;
     list-style: none;
@@ -125,7 +126,7 @@ td, th {
     width: 100px;
 }
 .flex-image2{
-    padding-top: 10px;
+    padding-top: 5px;
     padding-left: 10px;
     height: 200px;
 }

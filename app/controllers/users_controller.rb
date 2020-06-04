@@ -1,24 +1,30 @@
-class UsersController < ApplicationController
+ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   # GET /users
   # GET /users.json
   def index
     @users = User.all
+    @current_user = current_user
   end
 
   # GET /users/1
   # GET /users/1.json
   def show
+    @useronevent = UserOnEvent.all
+    @event = Event.all
+    @current_user = current_user
   end
 
   # GET /users/new
   def new
     @user = User.new
+    @current_user = current_user
   end
 
   # GET /users/1/edit
   def edit
+    @current_user = current_user
   end
 
   # POST /users
@@ -62,13 +68,18 @@ class UsersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def user_params
-      params.fetch(:user, {}).permit( :username, :full_name, :email, :age)
-    end
+  def current_user
+    @current_user = User.first
+  end
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = User.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def user_params
+    params.fetch(:user, {}).permit(:username, :full_name, :email, :age, :flyer)
+  end
 end
