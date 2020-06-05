@@ -21,3 +21,13 @@
 5. Improve views of descriptions and forms 
 6. Make the difference between users and system administrators more noticeable
 7. That empty events cannot be created
+
+-Commands to use before testing:
+
+yarn install --check-files
+
+bundle install
+
+rake db:migrate
+
+rails s
