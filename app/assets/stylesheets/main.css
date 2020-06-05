@@ -14,7 +14,7 @@ html, body {
 body {
     display: flex;
     flex-direction: column;
-    background: darkslateblue;
+    background: aliceblue;
     font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
@@ -100,7 +100,7 @@ td, th {
     display: flex;
     flex-flow: column;
     justify-content: space-around;
-    background: darkslateblue;
+    background: #DADADA;
     padding: 0;
     margin: 0;
     list-style: none;

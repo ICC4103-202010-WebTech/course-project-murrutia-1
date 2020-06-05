@@ -21,6 +21,12 @@
     <li><a <%= link_to 'Profile', user_path(@current_user.id) %></a></li>
     <li><a <%= link_to 'Events', events_path %></a></li>
     <li><a <%= link_to 'Organizations', organizations_path %></a></li>
+
+    <input style="float: right" type="search" name="search" id="search" placeholder="Search" class="form-control">
+    <button style="float: right" type="submit" class="btn btn-outline-success   glyphicon glyphicon-search">Search</button>
+
+
+
   </ul>
 </nav>
 
@@ -30,7 +36,7 @@
     <li><button><a <%= link_to "Back to home", root_path %></a></button></li>
   </aside>
   <main>
-    <%= yield %>
+     <%= yield %>
   </main>
 </div>
 </body>

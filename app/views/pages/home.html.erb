@@ -4,4 +4,13 @@
     <meta charset="UTF-8">
     <title>Events App</title>
 </head>
+<body>
+<h2>Recent Events</h2>
+<div class="flex-container">
+  <% @events.each do |event| %>
+   <p> <%= link_to  event.name, event %></p><br>
+  <% end %>
+</div>
+
+</body>
 </html>
