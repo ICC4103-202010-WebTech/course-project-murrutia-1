@@ -20,7 +20,8 @@
     - <%= link_to event.name, event %><br>
   <% end %>
 <% end %>
-
 <br>
-<%= link_to 'Edit', edit_organization_path(@organization) %> |
+<button><%= link_to 'Edit', edit_organization_path(@organization) %></button>
+<br>
+<br>
 <%= link_to 'Back', organizations_path %>

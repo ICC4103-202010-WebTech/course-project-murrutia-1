@@ -14,6 +14,7 @@ class EventsController < ApplicationController
     @useronevent = UserOnEvent.all
     @current_user = current_user
     @comments = Comment.all
+    @event_dates_to_votes = DateVote.joins(:event).where("date_votes.event_id = #{params[:id]}")
     @user = User
     @user = User.all
     @comment_replies = CommentReply

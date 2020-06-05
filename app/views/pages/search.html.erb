@@ -5,16 +5,18 @@
         <%= result.username %><br>
       <% end %>
 
-
       <% @results_organization.each do |result| %>
         <%= result.name %><br>
       <% end %>
 
+      <% @results_event.each do |result| %>
+        <%= result.name %><br>
+        <%= result.description%><br>
+      <% end %>
 
       <% @results_event_creator.each do |result| %>
         <%= result.name %><br>
       <% end %>
-
 
     </div>
   </div>

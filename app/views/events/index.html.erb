@@ -5,7 +5,7 @@
 <div class="row ml-0 mt-2 mb-3">
   <button><%= link_to "Add a new event", new_event_path, class: ["btn", "btn-primary"] %></button>
 </div>
-
+<br>
 <div class="flex-container">
   <% @events.each do |event| %>
     <%= render partial: 'event_tile', locals: { event: event } %>

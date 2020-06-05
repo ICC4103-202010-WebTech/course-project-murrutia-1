@@ -14,6 +14,13 @@
   <br>Address: <%= @event.location %>
   <br>Creation date: <%= @event.creation_date %>
   <br>Date: <%= @event.starting_event_date %>
+  <br>Created by:
+  <% @user.each do |user| %>
+    <% if @event.user_id == user.id %>
+      <%= link_to user.full_name, user %>
+      <% break %>
+    <% end %>
+  <% end %>
   <br>Privacy:
   <% if @event.event_privacy == 1 %>
     <%= "Private" %>
@@ -67,7 +74,15 @@
       <br><%= image_tag(file, class: "flex-image2", data: {target: "#myModal", toggle: "modal"}) %><br>
     <% end %>
   <% end %>
-
+  <br>
+  <select class="custom-select">
+    <option selected>Dates to event</option>
+    <%@event_dates_to_votes.each_with_index do |event_dates_to_vote,i| %>
+      <option value="i"><%=  event_dates_to_vote.date_voted %></option>
+    <% end %>
+  </select>
+  <button type="button" class="list-group-item list-group-item-action p-2">vote</button>
+  <br>
   <br>
   <%= form_with model: @event, local: true do |form| %>
     <%= errors_for @event %>
