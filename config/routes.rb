@@ -38,4 +38,5 @@ Rails.application.routes.draw do
   resources :user_on_events, defaults: {format: :html}
   resources :user_on_organizations, defaults: {format: :html}
 
+  get '/search' => 'pages#search', :as => 'search_page'
 end

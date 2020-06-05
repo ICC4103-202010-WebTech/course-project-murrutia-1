@@ -22,8 +22,14 @@
     <li><a <%= link_to 'Events', events_path %></a></li>
     <li><a <%= link_to 'Organizations', organizations_path %></a></li>
 
-    <input style="float: right" type="search" name="search" id="search" placeholder="Search" class="form-control">
-    <button style="float: right" type="submit" class="btn btn-outline-success   glyphicon glyphicon-search">Search</button>
+    <%= form_tag(search_page_path, :method => "get",
+                 class: 'navbar-form navbar-left') do %>
+      <div class="input-group my-2 my-sm-0">
+        <%= search_field_tag :search, params[:search], placeholder: "Search", class: "form-control" %>
+        <%= button_tag "Search", :class => 'btn btn-outline-success   glyphicon glyphicon-search',:name => nil%>
+        <li style="float: right"><a <%= link_to 'Log Out', root_path %></a></li>
+      </div>
+    <% end %>
 
 
 
