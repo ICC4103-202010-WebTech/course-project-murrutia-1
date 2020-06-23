@@ -18,39 +18,39 @@
     <div class="form-group">
       <%= form.label :name %>
       <%= form.text_field :name, class: "form-control" %>
-    </div>
+    </div><br>
     <div class="form-group">
       <%= form.label :description %>
       <%= form.text_area :description, class: "form-control" %>
-    </div>
+    </div><br>
     <div class="form-group">
       <%= form.label :location %>
       <%= form.text_area :location, class: "form-control" %>
-    </div>
+    </div><br>
     <div class="form-group">
       <%= form.label :starting_event_date %>
       <%= form.datetime_local_field :starting_event_date %>
-    </div>
+    </div><br>
     <div class="form-group">
       <%= form.label :event_privacy %><br>
       Private = 1 | Public = 0 <br>
       <%= form.text_area :event_privacy, class: "form-control" %>
-    </div>
+    </div><br>
     <div class="form-group">
       <%= form.label :organization %>
       <%= form.collection_select(:organization_id, Organization.all.order(name: :asc), :id, :name, {}, { class: "form-control" }) %>
-    </div>
+    </div><br>
     <div class="form-group">
       <%= form.label :user %>
       <%= form.collection_select(:user_id, User.all.order(name: :asc), :id, :username, {}, { class: "form-control" }) %>
-    </div>
+    </div><br>
     <div class="form-group">
       <%= form.label :Image %>
       <br>
       <%= form.file_field :flyer%>
-    </div><br>
+    </div>
     <div class="form-group mt-2">
-      <%= form.submit submit_tag, class: ["btn", "btn-primary"] %><br>
+      <%= form.submit submit_tag, class: ["btn", "btn-primary"] %><br><br>
       <%= link_to "Back", :back, class: ["btn", "btn-secondary"] %>
     </div>
     <% if action_name == 'edit' %>

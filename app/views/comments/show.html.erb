@@ -1,4 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<%= link_to 'Edit', edit_comment_path(@comment) %> |
-<%= link_to 'Back', comments_path %>
+<!div><!%= @comment.description %><!/div>
+<button><%= link_to 'Edit', edit_comment_path(@comment) %></button> <br><br>
+
+<%= link_to "Back", events_path, class: ["btn", "btn-secondary"] %>

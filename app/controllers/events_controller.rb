@@ -13,6 +13,7 @@ class EventsController < ApplicationController
   def show
     @useronevent = UserOnEvent.all
     @current_user = current_user
+    @organization = Organization.all
     @comments = Comment.all
     @event_dates_to_votes = DateVote.joins(:event).where("date_votes.event_id = #{params[:id]}")
     @user = User
@@ -74,9 +75,16 @@ class EventsController < ApplicationController
   # DELETE /events/1
   # DELETE /events/1.json
   def destroy
+
+    @comments = Comment.where(event_id: @event.id)
+    @comments.each do  |comment|
+      comment.destroy
+    end
+
     @event.destroy
+    render event_path
     respond_to do |format|
-      format.html { redirect_to events_url, notice: 'Event was successfully destroyed.' }
+      format.html { redirect_to events_path, notice: 'Event was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

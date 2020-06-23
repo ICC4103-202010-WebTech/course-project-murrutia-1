@@ -2,12 +2,12 @@
   <h2>Edit "<%=@user.username%>" User</h2>
 </div>
 <div class="row ml-0 mt-2">
-  <p>Please enter the required information to edit the "<%=@user.username%>" user:</p>
+  <p>You can edit the information of  "<%=@user.username%>":</p>
 </div>
 <%= render partial: "form",
            locals: {
                user: @user,
                submit_tag: "Update"
            } %>
-
+<br>
 <%= link_to "Destroy", @user, method: :delete%>

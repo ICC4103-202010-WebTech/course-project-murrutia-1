@@ -9,7 +9,7 @@
 </aside>
 
 <h2><%= @event.name %></h2>
-<p>Event info:        <button><%= link_to 'Edit', edit_event_path(@event) %></button>
+<p>Event info:        <button><%= link_to 'Edit', edit_event_path(@event) %></button><br>
   <br>Description: <%= @event.description %>
   <br>Address: <%= @event.location %>
   <br>Creation date: <%= @event.creation_date %>
@@ -111,4 +111,5 @@
     <% end %>
   </div>
   <br>
+  <!%= link_to "Delete",  @event, method: :delete, class: ["btn", "btn-primary"] %>
   <%= link_to 'Back', :back %>

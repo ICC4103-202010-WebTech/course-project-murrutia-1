@@ -2,20 +2,20 @@
 <div class=" text-success font-italic">
     <div  class="text-center">
       <% @results_username.each do |result| %>
-        <%= result.username %><br>
+        <p>User: </p> <%= link_to result.username, result %><br>
       <% end %>
 
       <% @results_organization.each do |result| %>
-        <%= result.name %><br>
+        <p>Organization: </p><%= link_to result.name, result %><br>
       <% end %>
 
       <% @results_event.each do |result| %>
-        <%= result.name %><br>
-        <%= result.description%><br>
+        <p>Event name: </p><%= link_to result.name, result %><br>
+        <p>Event Description: </p><%= link_to result.description, result%><br>
       <% end %>
 
       <% @results_event_creator.each do |result| %>
-        <%= result.name %><br>
+        <p>Event Creator: </p> <%= link_to result.name, result%><br>
       <% end %>
 
     </div>

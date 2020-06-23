@@ -9,5 +9,5 @@
                event: @event,
                submit_tag: "Update",
            } %>
-
-<%= link_to "Destroy", @event, method: :delete%>
+<br>
+<%= link_to "Destroy", @event, method: :delete, data: { confirm: 'Are you sure?' }%>

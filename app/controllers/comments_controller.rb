@@ -6,6 +6,7 @@ class CommentsController < ApplicationController
   def index
     @comments = Comment.all
     @current_user = current_user
+    @events = Event.all
   end
 
   # GET /comments/1
@@ -13,6 +14,7 @@ class CommentsController < ApplicationController
   def show
     @comment_replies = CommentReply
     @current_user = current_user
+    @events = Event.all
   end
 
   # GET /comments/new
