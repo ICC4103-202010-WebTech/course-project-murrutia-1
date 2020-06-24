@@ -42,7 +42,9 @@
     <li><button><a <%= link_to "Back to home", root_path %></a></button></li>
   </aside>
   <main>
-     <%= yield %>
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+    <%= yield %>
   </main>
 </div>
 </body>
