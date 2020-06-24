@@ -22,13 +22,16 @@
 <!% end %>
 
 <h3> Organizations Events:</h3>
-<% @event.each do |event| %>
+<% @events.each do |event| %>
   <% if event.organization_id == @organization.id %>
     - <%= link_to event.name, event %><br>
   <% end %>
 <% end %>
 <br>
-<button><%= link_to 'Edit', edit_organization_path(@organization) %></button>
+<%if @organization.user_ids == current_user.id || current_user.admin %>
+  <button><%= link_to 'Edit', edit_organization_path(@organization) %></button><br><br>
+  <button><%= link_to "Destroy", @organization, method: :delete %></button>
+<% end %>
 <br>
 <br>
 <%= link_to 'Back', organizations_path %>

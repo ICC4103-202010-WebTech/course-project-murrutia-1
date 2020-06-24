@@ -10,7 +10,7 @@ class OrganizationsController < ApplicationController
   # GET /organizations/1
   # GET /organizations/1.json
   def show
-    @event = Event.all
+    @events = Event.all
     @organizations = Organization.all
     @user = User.all
   end

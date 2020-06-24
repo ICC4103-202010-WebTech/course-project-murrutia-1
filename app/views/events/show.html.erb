@@ -9,7 +9,7 @@
 </aside>
 
 <h2><%= @event.name %></h2>
-<p>Event info:        <button><%= link_to 'Edit', edit_event_path(@event) %></button><br>
+<p>Event info:       <%if @event.user_id == current_user.id || current_user.admin %><button><%= link_to 'Edit', edit_event_path(@event) %></button><% end %><br>
   <br>Description: <%= @event.description %>
   <br>Address: <%= @event.location %>
   <br>Creation date: <%= @event.creation_date %>

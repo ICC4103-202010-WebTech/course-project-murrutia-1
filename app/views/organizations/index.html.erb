@@ -3,7 +3,9 @@
 <h1>Organizations</h1>
 
 <div class="row ml-0 mt-2 mb-3">
-  <button><%= link_to "Add a new organization", new_organization_path, class: ["btn", "btn-primary"] %></button>
+  <% if user_signed_in? %>
+    <button><%= link_to "Add a new organization", new_organization_path, class: ["btn", "btn-primary"] %></button>
+  <% end %>
 </div>
 <br>
 <% @organizations.each do |org| %>

@@ -3,7 +3,9 @@
 <h1>Events</h1>
 
 <div class="row ml-0 mt-2 mb-3">
-  <button><%= link_to "Add a new event", new_event_path, class: ["btn", "btn-primary"] %></button>
+  <%if current_user&.admin%>
+    <button><%= link_to "Add a new event", new_event_path, class: ["btn", "btn-primary"] %></button>
+  <% end %>
 </div>
 <br>
 <div class="flex-container">

@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, except: [:show, :index]
 
   # GET /events
   # GET /events.json
@@ -40,7 +41,7 @@ class EventsController < ApplicationController
   # POST /events
   # POST /events.json
   def create
-    @current_user = current_user
+    @event.user = current_user
     @event = Event.new(event_params)
 
     respond_to do |format|
@@ -90,9 +91,6 @@ class EventsController < ApplicationController
   end
 
   private
-  def current_user
-    @current_user = User.first
-  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_event

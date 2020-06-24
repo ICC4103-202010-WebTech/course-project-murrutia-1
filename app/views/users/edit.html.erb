@@ -1,13 +1,13 @@
 <div class="row ml-0 mt-3">
-  <h2>Edit "<%=@user.username%>" User</h2>
+  <h2>Edit "<%=current_user.username%>" User</h2>
 </div>
 <div class="row ml-0 mt-2">
-  <p>You can edit the information of  "<%=@user.username%>":</p>
+  <p>You can edit the information of  "<%=current_user.username%>":</p>
 </div>
 <%= render partial: "form",
            locals: {
-               user: @user,
+               user: current_user,
                submit_tag: "Update"
            } %>
 <br>
-<%= link_to "Destroy", @user, method: :delete%>
+<%= link_to "Destroy", current_user, method: :delete%>
