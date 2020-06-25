@@ -20,6 +20,7 @@
     <li><a <%= link_to 'Users', users_path %></a></li>
     <% if user_signed_in? %>
       <li><a <%= link_to 'Profile', user_path(@current_user.id) %></a></li>
+      <li><a <%= link_to 'Inbox', mailbox_inbox_path %></a></li>
     <% end %>
     <li><a <%= link_to 'Events', events_path %></a></li>
     <li><a <%= link_to 'Organizations', organizations_path %></a></li>
@@ -29,7 +30,7 @@
       <div class="input-group my-2 my-sm-0">
         <%= search_field_tag :search, params[:search], placeholder: "Search", class: "form-control" %>
         <%= button_tag "Search", :class => 'btn btn-outline-success   glyphicon glyphicon-search',:name => nil%>
-        <% if current_user %>
+        <% if user_signed_in? %>
           <li style="float: right"><a <%= link_to 'Sing out', destroy_user_session_path, method: :delete %></a></li>
         <%else %>
           <li style="float: right"><a <%= link_to 'Sing up', new_user_registration_path %></a></li>

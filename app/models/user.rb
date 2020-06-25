@@ -1,10 +1,3 @@
-class EmailValidator < ActiveModel::EachValidator
-  def validate_each(record,attribute,value)
-    unless value =~ /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
-      record.errors[attribute] << (options[:message] || "is not an email")
-    end
-  end
-end
 
 
 class User < ApplicationRecord
@@ -13,7 +6,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   validates :username, presence: true, uniqueness: true
-  validates :email, presence: true, uniqueness: true, email: true
+  validates :email, presence: true, uniqueness: true#, email: true
 
   has_one_attached :flyer
   has_many :comments, dependent: :destroy
@@ -24,4 +17,14 @@ class User < ApplicationRecord
   has_many :user_on_events, dependent: :destroy
   has_many :organizations, through: :user_on_organizations
   has_many :events, through: :user_on_events
+
+  acts_as_messageable
+
+  def mailboxer_name
+    self.name
+  end
+
+  def mailboxer_email(object)
+    self.email
+  end
 end
