@@ -9,4 +9,5 @@ class Event < ApplicationRecord
   has_many :date_votes, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :comment_replies, through: :comments
+    #has_one :page, dependent: :destroy
 end

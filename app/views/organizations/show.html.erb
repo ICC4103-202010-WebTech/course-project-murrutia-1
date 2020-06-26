@@ -14,17 +14,29 @@
   <br>Description: <%= @organization.description %>
 </p>
 <!br>
-<!% @user.each do |user| %>
-  <!% if @organization.user_ids == user.id %>
-    <!%= link_to user.full_name, user %>
-    <!% break %>
-  <!% end %>
-<!% end %>
 
+<br>Created by:
+<% @user.each do |user| %>
+  <% if @organization.user_ids == user.id %>
+    <%= link_to user.full_name, user %>
+    <% break %>
+  <%else %>
+    <p>Admin1</p>
+    <%break %>
+  <% end %>
+<% end %>
+<!br>
 <h3> Organizations Events:</h3>
+<% a=0 %>
 <% @events.each do |event| %>
   <% if event.organization_id == @organization.id %>
-    - <%= link_to event.name, event %><br>
+    <% if event.event_privacy == 0 %>
+      - <%= link_to event.name, event %><br>
+      <% a = 1 %>
+    <% elsif a == 0 %>
+      <p>There is not public events in this organization</p>
+      <%break %>
+    <% end %>
   <% end %>
 <% end %>
 <br>
