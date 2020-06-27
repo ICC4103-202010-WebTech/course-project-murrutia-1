@@ -13,7 +13,8 @@
   def show
     @useronevent = UserOnEvent.all
     @events = Event.all
-    @user = current_user
+    @users = User.all
+    @user = set_user
   end
 
   # GET /users/new
@@ -24,7 +25,7 @@
 
   # GET /users/1/edit
   def edit
-
+    @user = set_user
   end
 
   # POST /users
