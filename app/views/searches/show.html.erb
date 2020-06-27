@@ -1,0 +1,52 @@
+<h1>Search Results</h1>
+<div class="flex-container">
+  <div class="flex-item-event3">
+    <h2>Events Result:</h2><br>
+    <% unless @search.events == nil %>
+      <% @search.events.each do |event| %>
+        <br>
+        <tr>
+          <li> <%= link_to event.name, event_path(event) %><br></li>
+          <br>
+        </tr>
+        <br>
+      <% end %>
+    <% end %>
+    <% unless @search.events != nil %>
+      <h3>There was no events with that keyword</h3>
+    <% end %>
+  </div>
+
+  <div class="flex-item-event3">
+    <h2>User Results:</h2><br>
+    <% unless @search.users == nil %>
+      <% @search.users.each do |u| %>
+        <br>
+        <tr>
+          <li> <%= link_to u.full_name, user_path(u) %><br></li>
+          <br>
+        </tr>
+        <br>
+      <% end %>
+    <% end %>
+    <% unless @search.users != nil %>
+      <h3>There was no users with that keyword</h3>
+    <% end %>
+  </div>
+  <div class="flex-item-event3">
+    <h2>Organization Result:</h2><br>
+    <% unless @search.organizations == nil %>
+      <% @search.organizations.each do |u| %>
+        <br>
+        <tr>
+          <li> <%= link_to u.name, organization_path(u) %><br></li>
+          <br>
+        </tr>
+        <br>
+      <% end %>
+    <% end %>
+    <% unless @search.organizations != nil %>
+      <h3>There was no organizations with that keyword</h3>
+    <% end %>
+  </div>
+</div>

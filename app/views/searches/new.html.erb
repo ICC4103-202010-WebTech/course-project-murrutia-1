@@ -1,0 +1,8 @@
+<h1>Search</h1>
+
+<%= form_for @search do |f| %>
+  <div class="field">
+    <%= f.text_field :keyword, placeholder: "Search..." %>
+    <%= f.submit "Search" %>
+  </div>
+<% end %>

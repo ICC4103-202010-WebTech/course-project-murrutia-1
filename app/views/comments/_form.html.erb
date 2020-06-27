@@ -10,7 +10,6 @@
       </ul>
     </div>
   <% end %>
-
 <% end %>
 
 <div class="row ml-0">
@@ -20,11 +19,6 @@
       <%= form.label :message %>:
       <%= form.text_area :message, class: "form-control" %>
     </div><br>
-    <% if action_name == 'edit' %>
-      <%= form.label "Delete"%>
-      <%= link_to "Destroy", @comments, method: :delete%>
-      <%= form.submit submit_tag, class: ["btn", "btn-primary"] %>
-    <% end %>
     <% if action_name == 'new' %>
       <div class="form-group">
         <%= form.label :event %>
@@ -34,8 +28,8 @@
         <%= form.label :user %>
         <%= form.collection_select(:user_id, User.all.order(name: :asc), :id, :username, {}, { class: "form-control" }) %>
       </div><br>
-      <div class="form-group mt-2">
-        <%= form.submit submit_tag, class: ["btn", "btn-primary"] %><br><br>
+      <div class="form-group">
+        <%= form.submit submit_btn_text, class: ["btn", "btn-primary"] %><br><br>
         <%= link_to "Back", :back, class: ["btn", "btn-secondary"] %>
       </div>
     <% end %>

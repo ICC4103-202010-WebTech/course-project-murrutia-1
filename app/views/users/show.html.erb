@@ -1,41 +1,50 @@
-<p id="notice"><%= notice %></p>
-
 <h1>Profile of  <% if current_user %><%= @user.username  %><%end %></h1>
-<% if @user.flyer.attached? %>
-  <%= image_tag(@user.flyer, class: "flex-image2", data: {target: "#myModal", toggle: "modal"}) %>
+<% if current_user.flyer.attached? %>
+  <%= image_tag(current_user.flyer, class: "flex-image-L", data: {target: "#myModal", toggle: "modal"}) %>
 <% else %>
-  <img class="flex-image2" src="https://www.madrimasd.org/blogs/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png">
+  <%= image_tag("profile_pic.png", class: "flex-image-L") %>
 <% end %>
-<p>
-  <br>id: <%= @user.id %>
+<h2>User Info:</h2>
+<p>Username: <%= @user.username %>
   <br>Full Name: <%= @user.full_name %>
   <br>Age: <%= @user.age %>
   <br>Email: <%= @user.email %>
+  <br><h3>User role:</h3>
+  <% if @user.admin %>
+    System Admin
+  <% else %>
+    Normal User
+  <% end %>
+  <% @organization.each do |organization| %>
+    <% if organization.user_id == @user.id %>
+      - Administrator of "<%= organization.name %>" organization
+    <% end %>
+  <% end %>
+
 </p>
 
-<h4> Your invitations:</h4>
-<% @useronevent.each do |user| %>
+<h3> Events you have created:</h3>
+<% @event.each do |event| %>
+  <% if event.user_id == @user.id %>
+    - <%= link_to event.name, event %><br>
+  <% end %>
+<% end %>
+<br>
+<h3> Your invitations:</h3><br>
+<% @user_on_event.each do |user| %>
   <% if user.user_id == @user.id %>
-    <% @events.each do |event| %>
+    <% @event.each do |event| %>
       <% if user.event_id == event.id %>
         - <%= link_to event.name, event %><br>
       <% end %>
     <% end %>
   <% end %>
 <% end %>
-
-<h4> Events you have created:</h4>
-  <% @events.each do |event| %>
-  <% if event.user_id == @user.id %>
-    - <%= link_to event.name, event %><br>
-  <% end %>
+<br>
+<br>
+<% if (user_signed_in? && current_user.id == @user.id) or (user_signed_in? && current_user.admin) %> <!-- ONLY THE USER CAN EDIT OR DESTROY or an admin-->
+  <%= button_to "Destroy", @user, {:onclick => "return confirm('Are you sure?')", :method => :delete, :remote => true} %>
+  <br>
+  <%= link_to 'Edit', edit_user_path(@user) %> |
 <% end %>
-
-<br>
-<%if @user.id == current_user.id || @user.admin %>
-  <button><%= link_to 'Edit', edit_user_path(@user) %></button><br><br>
-  <button><%= link_to "Destroy", @user, method: :delete %></button>
-<% end %>
-<br>
-<br>
-<%= link_to 'Back', users_path %>
+<%= link_to 'Back', :back %>

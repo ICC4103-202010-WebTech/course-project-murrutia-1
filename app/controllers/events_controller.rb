@@ -5,50 +5,42 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
-    @events = Event.all
-    @current_user = current_user
+    @events = Event.search(params[:search])
   end
 
   # GET /events/1
   # GET /events/1.json
   def show
-    @useronevent = UserOnEvent.all
-    @current_user = current_user
+    @user_on_event = UserOnEvent.all
     @organization = Organization.all
     @comments = Comment.all
-    @event_dates_to_votes = DateVote.joins(:event).where("date_votes.event_id = #{params[:id]}")
-    @user = User
     @user = User.all
     @comment_replies = CommentReply
   end
 
   # GET /events/new
   def new
-    @current_user = current_user
     @event = Event.new
   end
 
   def invite
-    @current_user = current_user
     @event = Event.new
   end
 
   # GET /events/1/edit
   def edit
-    @current_user = current_user
   end
 
   # POST /events
   # POST /events.json
   def create
-    @event.user = current_user
     @event = Event.new(event_params)
+    #@event.user = current_user
 
     respond_to do |format|
       if @event.save
         format.html { redirect_to @event, notice: 'Event was successfully created.' }
         format.json { render :show, status: :created, location: @event }
-        flash[:notice] ="Event was successfully created"
       else
         format.html { render :new }
         format.json { render json: @event.errors, status: :unprocessable_entity }
@@ -59,16 +51,13 @@ class EventsController < ApplicationController
   # PATCH/PUT /events/1
   # PATCH/PUT /events/1.json
   def update
-    @current_user = current_user
     respond_to do |format|
       if @event.update(event_params)
-        format.html { redirect_to @event; flash[:notice] =  'Event was successfully updated.' }
+        format.html { redirect_to @event, notice: 'Event was successfully updated.' }
         format.json { render :show, status: :ok, location: @event }
-        flash[:notice] ="Event updated successfully"
       else
         format.html { render :edit }
         format.json { render json: @event.errors, status: :unprocessable_entity }
-        flash[:alert] ="The event could not be updated"
       end
     end
   end
@@ -76,16 +65,9 @@ class EventsController < ApplicationController
   # DELETE /events/1
   # DELETE /events/1.json
   def destroy
-
-    @comments = Comment.where(event_id: @event.id)
-    @comments.each do  |comment|
-      comment.destroy
-    end
-
     @event.destroy
-    render event_path
     respond_to do |format|
-      format.html { redirect_to events_path, notice: 'Event was successfully destroyed.' }
+      format.html { redirect_to events_url, notice: 'Event was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

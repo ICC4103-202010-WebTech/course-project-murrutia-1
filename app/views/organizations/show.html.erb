@@ -1,34 +1,25 @@
-<p id="notice"><%= notice %></p>
-
-<aside style="float: right; padding-right: 10px">
-
+<aside style="float: right; padding-right: 20px">
   <% if @organization.flyer.attached? %>
-    <%= image_tag(@organization.flyer, class: "flex-image3", data: { target: "#myModal", toggle: "modal"}) %>
+    <%= image_tag(@organization.flyer, class: "flex-image-XL", data: {target: "#myModal", toggle: "modal"}) %>
   <% else %>
-    <%= image_tag("thumbnail.svg", class: "flex-image3") %>
+    <%= image_tag("thumbnail.svg", class: "flex-image-XL") %>
   <% end %>
 </aside>
 
-<h2>"<%= @organization.name %>"</h2>
-<p>Name: <%= @organization.name %>
-  <br>Description: <%= @organization.description %>
-</p>
-<!br>
-
-<br>Created by:
-<% @user.each do |user| %>
-  <% if @organization.user_ids == user.id %>
-    <%= link_to user.full_name, user %>
-    <% break %>
-  <%else %>
-    <p>Admin1</p>
-    <%break %>
+<h2><%= @organization.name %></h2>
+<p>
+  <br>Description: <%= @organization.description %><br>
+  <br>Created by:
+  <% @user.each do |user| %>
+    <% if @organization.user_id == user.id %>
+      <%= link_to user.full_name, user_path %>
+    <% end %>
   <% end %>
-<% end %>
-<!br>
+</p>
+<br><br>
 <h3> Organizations Events:</h3>
 <% a=0 %>
-<% @events.each do |event| %>
+<% @event.each do |event| %>
   <% if event.organization_id == @organization.id %>
     <% if event.event_privacy == 0 %>
       - <%= link_to event.name, event %><br>
@@ -39,11 +30,15 @@
     <% end %>
   <% end %>
 <% end %>
-<br>
-<%if @organization.user_ids == current_user.id || current_user.admin %>
-  <button><%= link_to 'Edit', edit_organization_path(@organization) %></button><br><br>
-  <button><%= link_to "Destroy", @organization, method: :delete %></button>
+<br><br>
+
+<% if (user_signed_in? && current_user.id == @organization.user_id) or (user_signed_in? && current_user.admin) %> <!-- ONLY THE CREATOR OF THE ORGANIZATION CAN EDIT OR DESTROY or an admin-->
+  <%= button_to "Destroy", @organization, {:onclick => "return confirm('Are you sure?')", :method => :delete, :remote => true} %>
+  <br>
+  <%= link_to 'Edit', edit_organization_path(@organization) %> |
+  <%= link_to 'Back', :back %>
+
+<% else %>
+  <%= link_to 'Back', :back %>
+
 <% end %>
-<br>
-<br>
-<%= link_to 'Back', organizations_path %>

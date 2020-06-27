@@ -1,24 +1,7 @@
 Rails.application.routes.draw do
-
-  devise_for :users
-
-
-
+  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root "pages#home"
-
-  get "mailbox/inbox" => "mailbox#inbox", as: :mailbox_inbox
-  get "mailbox/sent" => "mailbox#sent", as: :mailbox_sent
-  get "mailbox/trash" => "mailbox#trash", as: :mailbox_trash
-
-  # conversations
-  resources :conversations do
-    member do
-      post :reply
-      post :trash
-      post :untrash
-    end
-  end
 
   namespace :api, defaults: {format: :json} do
     namespace :v1 do
@@ -35,6 +18,7 @@ Rails.application.routes.draw do
       resources :users do
         resources :user_on_organizations
         resources :user_on_events
+        resources :mail_boxes
         resources :comments do
           resources :comment_replies
         end
@@ -48,6 +32,10 @@ Rails.application.routes.draw do
   resources :comments, defaults: {format: :html} do
     resources :comment_replies, defaults: {format: :html}
   end
+
+  resources :terms_of_service, defaults: {format: :html}
+  resources :acceptable_use_policy, defaults: {format: :html}
+
   resources :date_votes, defaults: {format: :html}
   resources :events, defaults: {format: :html}
   resources :organizations, defaults: {format: :html}
@@ -55,6 +43,10 @@ Rails.application.routes.draw do
   resources :users, defaults: {format: :html}
   resources :user_on_events, defaults: {format: :html}
   resources :user_on_organizations, defaults: {format: :html}
+  resources :mail_boxes, defaults: {format: :html}
+  resources :admins, defaults: {format: :html}
+  resources :searches
 
-  get '/search' => 'pages#search', :as => 'search_page'
+  resources :reports, defaults: {format: :html}
+
 end

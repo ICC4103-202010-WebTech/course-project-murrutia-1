@@ -7,7 +7,8 @@
 <%= render partial: "form",
            locals: {
                user: @user,
-               submit_tag: "Update"
+               submit_btn_text: "Update"
            } %>
 <br>
-<%= link_to "Destroy", current_user, method: :delete%>
+<%= link_to "Change password", edit_user_registration_path %> |
+<%= link_to "Back", :back, class: ["btn", "btn-secondary"] %>

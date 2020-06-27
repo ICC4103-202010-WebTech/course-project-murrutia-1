@@ -1,0 +1,9 @@
+<h1>New Mail</h1>
+
+<%= render partial: "form",
+           locals: {
+               mail_box: @mail_box,
+               submit_btn_text: "Send"
+           } %>
+
+<%= link_to 'Back', :back %>

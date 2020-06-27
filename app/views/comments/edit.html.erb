@@ -4,7 +4,9 @@
 <%= render partial: "form",
            locals: {
                comment: @comment,
-               submit_tag: "Update"
+               submit_btn_text: "Update"
            } %>
-<br>
+<br><br>
+<%= button_to "Destroy", @comment, {:onclick => "return confirm('Are you sure?')", :method => :delete, :remote => true} %>
+<!%= link_to 'Show', @comment %><br><br>
 <%= link_to 'Back', :back %>

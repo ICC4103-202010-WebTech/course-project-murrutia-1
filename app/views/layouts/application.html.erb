@@ -8,6 +8,7 @@
 
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+
 </head>
 
 <header>
@@ -19,24 +20,23 @@
   <ul id="navbar">
     <li><a <%= link_to 'Users', users_path %></a></li>
     <% if user_signed_in? %>
-      <li><a <%= link_to 'Profile', user_path(@current_user.id) %></a></li>
-      <li><a <%= link_to 'Inbox', mailbox_inbox_path %></a></li>
+      <li><a <%= link_to 'Profile', user_path(current_user.id) %></a></li>
+      <li><a <%= link_to 'MailBox', mail_boxes_path %></a></li>
     <% end %>
     <li><a <%= link_to 'Events', events_path %></a></li>
     <li><a <%= link_to 'Organizations', organizations_path %></a></li>
-
-    <%= form_tag(search_page_path, :method => "get",
-                 class: 'navbar-form navbar-left') do %>
-      <div class="input-group my-2 my-sm-0">
-        <%= search_field_tag :search, params[:search], placeholder: "Search", class: "form-control" %>
-        <%= button_tag "Search", :class => 'btn btn-outline-success   glyphicon glyphicon-search',:name => nil%>
-        <% if user_signed_in? %>
-          <li style="float: right"><a <%= link_to 'Sing out', destroy_user_session_path, method: :delete %></a></li>
-        <%else %>
-          <li style="float: right"><a <%= link_to 'Sing up', new_user_registration_path %></a></li>
-          <li style="float: right"><a <%= link_to 'Sing in', new_user_session_path %></a></li>
-        <%end %>
-      </div>
+    <li><a <%= link_to 'Search', new_search_path %></a></li>
+    <% if not user_signed_in? %>
+      <li style="float: right"><%= link_to "Sign In", new_user_session_path %></li>
+      <li style="float: right"><%= link_to "Register", new_user_registration_path %></li>
+    <% else
+         if user_signed_in? %>
+        <li style="float: right"><%= button_to "Log Out", destroy_user_session_path, :method => :delete %></li>
+      <% else
+           if admin_signed_in %>
+          <li style="float: right"><%= button_to "Log Out", destroy_admin_session_path, :method => :delete %></li>
+        <% end %>
+      <% end %>
     <% end %>
   </ul>
 </nav>
@@ -44,14 +44,14 @@
 <body>
 <div id="container">
   <aside id="customer_info">
-    <% if user_signed_in? %>
+    <% if  current_user.present? %>
       <h4>Hi! <%= current_user.username %></h4>
       <% if current_user.admin %>
         <h6>~Admin Session~</h6>
       <% end %>
     <% else %>
-      <h4> Register <a<%= link_to 'Here', new_user_registration_path %>></a></li> </h4>
-    <% end %>
+      <li> Register <a <%= link_to "Here", new_user_registration_path %></a></li> </li>
+    <% end %><br><br>
     <li><button><a <%= link_to "Back to home", root_path %></a></button></li>
   </aside>
   <main>
@@ -63,6 +63,7 @@
 </body>
 
 <footer>
-  <p>Developed by Martin Urrutia</p>
+  <p><%= link_to "Terms of Service", terms_of_service_index_path %>
+    | <%= link_to "Acceptable Use Policy", acceptable_use_policy_index_path %><p style="float: right">Developed by Martin Urrutia</p></p>
 </footer>
 </html>

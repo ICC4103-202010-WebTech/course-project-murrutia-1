@@ -1,23 +1,28 @@
-<p id="notice"><%= notice %></p>
-
 <aside style="float: right; padding-right: 20px">
   <% if @event.flyer.attached? %>
-    <%= image_tag(@event.flyer, class: "flex-image3", data: {target: "#myModal", toggle: "modal"}) %>
+    <%= image_tag(@event.flyer, class: "flex-image-XL", data: {target: "#myModal", toggle: "modal"}) %>
   <% else %>
-    <%= image_tag("thumbnail.svg", class: "flex-image3") %>
+    <%= image_tag("thumbnail.svg", class: "flex-image-XL") %>
   <% end %>
 </aside>
 
 <h2><%= @event.name %></h2>
-<p>Event info:       <%if @event.user_id == current_user.id || current_user.admin %><button><%= link_to 'Edit', edit_event_path(@event) %></button><% end %><br>
-  <br>Description: <%= @event.description %>
-  <br>Address: <%= @event.location %>
-  <br>Creation date: <%= @event.creation_date %>
-  <br>Date: <%= @event.starting_event_date %>
+<p>
+  <br>Description: <%= @event.description %> <br>
+  <br>Address: <%= @event.location %> <br>
+  <br>Creation date: <%= @event.creation_date %> <br>
+  <br>Date: <%= @event.starting_event_date %> <br>
   <br>Created by:
   <% @user.each do |user| %>
     <% if @event.user_id == user.id %>
       <%= link_to user.full_name, user %>
+      <% break %>
+    <% end %>
+  <% end %> <br>
+  <br>Organization:
+  <% @organization.each do |organization| %>
+    <% if @event.organization_id == organization.id %>
+      <%= link_to organization.name, organization %><br>
       <% break %>
     <% end %>
   <% end %>
@@ -30,86 +35,106 @@
 </p>
 
 <p>
-<h3>Guest List:</h3>
-<% @useronevent.each do |event| %>
-  <% if event.event_id == @event.id %>
-    <% @user.each do |user| %>
-      <% if user.id == event.user_id %>
-        - <%= user.full_name %><br>
+  <b>Guest List:</b><br>
+  <% @user_on_event.each do |event| %>
+    <% if event.event_id == @event.id %>
+      <% @user.each do |user| %>
+        <% if user.id == event.user_id %>
+          - <%= link_to user.full_name, user %><br>
+        <% end %>
       <% end %>
     <% end %>
   <% end %>
-<% end %>
 </p>
-
 <h3>Comments:</h3>
 <p>
   <% @event.comments.each do |comment| %>
     <tr>
     <p>
+    <div class="flex-">
       <%= comment.user.username %>:
       <%= comment.message %>
-      <% if @current_user.id == comment.user.id %>
-        <%= link_to 'Edit', edit_comment_path(comment) %>
-      <% end %>
-      <% @event.comment_replies.each do |reply| %>
-        <tr>
+    </div>
+    <% if (user_signed_in? && current_user.id == @event.user_id) or (user_signed_in? && current_user.admin) %>
+      <%= link_to 'Edit/Delete', edit_comment_path(comment) %>
+    <% end %>
+    <% @event.comment_replies.each do |reply| %>
+      <tr>
         <p>
           <% if reply.comment.id == comment.id %>
-            reply of <%= reply.user.username %>:
+          <div class="flex-item-reply">
+            -> <%= reply.user.username %>:
             <%= reply.message %>
-          <% end %>
+          </div>
+        <% end %>
         </p>
-        </tr>
-      <% end %>
-      </p>
       </tr>
+    <% end %>
+    </p>
+    </tr>
   <% end %>
-  </p>
-  <p><%= link_to '- New Comment -', new_comment_path(@comment) %> </p>
-  <br>
+  <% if user_signed_in? %>
+    </p>
+    <p><%= link_to '- New Comment -', new_comment_path(@comment) %> </p>
+    <br>
+  <% end %>
 
-  <% if @event.files.attached? %>
-    <% @event.files.each do |file| %>
-      <br><%= image_tag(file, class: "flex-image2", data: {target: "#myModal", toggle: "modal"}) %><br>
-    <% end %>
+  <% @event.files.each do |file| %>
+    <%= image_tag(file, class: "flex-image-L") %><br>
   <% end %>
+
   <br>
-  <select class="custom-select">
-    <option selected>Dates to event</option>
-    <%@event_dates_to_votes.each_with_index do |event_dates_to_vote,i| %>
-      <option value="i"><%=  event_dates_to_vote.date_voted %></option>
-    <% end %>
-  </select>
-  <button type="button" class="list-group-item list-group-item-action p-2">vote</button>
-  <br>
-  <br>
-  <%= form_with model: @event, local: true do |form| %>
-    <%= errors_for @event %>
-    <div class="form-group">
-      <%= form.label :Upload_Files %>
-      <br>
-      <%= form.file_field :files %>
-    </div>
-    <div class="form-group mt-2">
-      <%= form.submit "Upload", class: ["btn", "btn-primary"] %>
+  <% if user_signed_in? %>
+    <div class="flex">
+      <li class="flex-item-event">
+        <%= form_with model: @event, local: true do |form| %>
+          <%= errors_for @event %>
+          <div class="form-group">
+            <%= form.label :Upload_files_videos_or_images %>
+            <br>
+            <p><%= form.file_field :files %></p>
+            <div class="form-group mt-2">
+              <%= form.submit "Upload", class: ["btn", "btn-primary"] %>
+            </div>
+          </div>
+        <% end %>
+        <br>
+      </li>
     </div>
   <% end %>
+
+  <% if user_signed_in? && current_user.id == @event.user_id %>
+    <h4>Invite People:</h4>
+    <div class="row ml-0">
+      <%= form_with model: @event, local: true do |form| %>
+        <%= errors_for @event %>
+        <div class="form-group">
+          <%= form.label :user %>
+          <%= form.collection_select(:user_id, User.all.order(name: :asc), :id, :username, {}, {class: "form-control"}) %>
+        </div>  <br>
+        <div class="form-group">
+          <%= form.label :event %>
+          <%= form.collection_select(:event_id, Event.all.order(name: :asc), :id, :name, {}, {class: "form-control"}) %>
+        </div>  <br>
+        <div class="form-group mt-2">
+          <%= form.submit "Invite", class: ["btn", "btn-primary"] %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+  <br>  <br>
+
+
+
+
   <br>
-  <h4>Invite people to "<%=@event.name%>":</h4>
-  <div class="row ml-0">
-    <%= form_with model: @event, local: true do |form| %>
-      <%= errors_for @event %>
-      <div class="form-group">
-        <%= form.label :user %>
-        <%= form.collection_select(:user_id, User.all.order(name: :asc), :id, :username, {}, {class: "form-control"}) %>
-      </div>
-      <br>
-      <div class="form-group mt-2">
-        <%= form.submit "Invite", class: ["btn", "btn-primary"] %>
-      </div>
-    <% end %>
-  </div>
-  <br>
-  <!%= link_to "Delete",  @event, method: :delete, class: ["btn", "btn-primary"] %>
+  <% if (user_signed_in? && current_user.id == @event.user_id) or (user_signed_in? && current_user.admin) %>
+    <%= button_to "Destroy", @event, {:onclick => "return confirm('Are you sure?')", :method => :delete, :remote => true} %>
+    <br>
+    <%= link_to 'Edit', edit_event_path(@event) %> |
+  <% end %>
+  <% if user_signed_in? %>
+    <%= link_to 'Report Event', edit_mail_box_path, method: :get %> |
+  <% end %>
   <%= link_to 'Back', :back %>
+

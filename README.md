@@ -11,12 +11,14 @@
 7. Added support for file uploads 
 8. Added interactivity to your web application
 9. Layouts improved using bootstrap, colors and distributions
+10. Admin and user session
+11. Mailbox
+12. Google authentication
+13. Terms of service and Policy
 
 - Pending  features: 
 
 1. Improve voting for event date
-5. Improve views of descriptions and forms 
-7. That empty events cannot be created
 
 -Commands to use before testing:
 
@@ -25,5 +27,7 @@ yarn install --check-files
 bundle install
 
 rake db:migrate
+
+rake db:seed
 
 rails s

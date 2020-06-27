@@ -32,27 +32,26 @@
       <%= form.datetime_local_field :starting_event_date %>
     </div><br>
     <div class="form-group">
-      <%= form.label :event_privacy %><br>
-      Private = 1 | Public = 0 <br>
-      <%= form.text_area :event_privacy, class: "form-control" %>
+      <%= form.label :event_privacy %>:<br><br>
+      Private = 1 | Public = 0 <br><br>
+      <%= form.text_field :event_privacy, class: "form-control" %>
     </div><br>
     <div class="form-group">
       <%= form.label :organization %>
       <%= form.collection_select(:organization_id, Organization.all.order(name: :asc), :id, :name, {}, { class: "form-control" }) %>
     </div><br>
-    <div class="form-group">
-      <%= form.label :user %>
-      <%= form.collection_select(:user_id, User.all.order(name: :asc), :id, :username, {}, { class: "form-control" }) %>
-    </div><br>
+    <%= form.hidden_field :user_id, value: current_user.id %>
     <div class="form-group">
       <%= form.label :Image %>
       <br>
       <%= form.file_field :flyer%>
     </div>
+    <br>
     <div class="form-group mt-2">
-      <%= form.submit submit_tag, class: ["btn", "btn-primary"] %><br><br>
-      <%= link_to "Back", :back, class: ["btn", "btn-secondary"] %>
-    </div>
+      <%= form.submit submit_btn_text, class: ["btn", "btn-primary"] %>
+    </div><br><br>
+    <%= link_to "Back", :back, class: ["btn", "btn-secondary"] %>
+    <br><br>
     <% if action_name == 'edit' %>
       <%= form.label "Invite"%>
       <%= form.check_box :_destroy %>

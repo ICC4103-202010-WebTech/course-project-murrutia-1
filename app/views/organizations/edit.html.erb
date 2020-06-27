@@ -1,13 +1,12 @@
 <div class="row ml-0 mt-3">
   <h2>Edit "<%=@organization.name%>" Organization</h2>
 </div>
-<div class="row ml-0 mt-2">
-  <p>Change the information you want to edit of  "<%=@organization.name%>" Organization:</p>
-</div>
+
 <%= render partial: "form",
            locals: {
                organization: @organization,
-               submit_tag: "Update"
+               submit_btn_text: "Update"
            } %>
-<br>
-<%= link_to "Destroy", @organization, method: :delete%>
+
+<!%= link_to 'Show', @organization %>
+<!%= link_to 'Back', organizations_path %>

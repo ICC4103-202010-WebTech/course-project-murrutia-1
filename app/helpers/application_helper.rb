@@ -1,4 +1,5 @@
 module ApplicationHelper
+
   def errors_for(object)
     if object.errors.any?
       content_tag(:div, class: 'card text-white bg-danger mb-3') do
@@ -16,9 +17,5 @@ module ApplicationHelper
         end)
       end
     end
-  end
-
-  def active_page(active_page)
-    @active == active_page ? "active" : ""
   end
 end

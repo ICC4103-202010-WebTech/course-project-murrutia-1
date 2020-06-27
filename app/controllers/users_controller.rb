@@ -1,31 +1,27 @@
- class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
-
+class UsersController < ApplicationController
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :delete]
+  before_action :authenticate_user!
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
-
+    @users = User.search(params[:search])
   end
 
   # GET /users/1
   # GET /users/1.json
   def show
-    @useronevent = UserOnEvent.all
-    @events = Event.all
-    @users = User.all
-    @user = set_user
+    @user_on_event = UserOnEvent.all
+    @event = Event.all
+    @organization = Organization.all
   end
 
   # GET /users/new
   def new
     @user = User.new
-
   end
 
   # GET /users/1/edit
   def edit
-    @user = set_user
   end
 
   # POST /users
@@ -61,6 +57,15 @@
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
+    Comment.where(user_id: params[:id]).destroy_all
+    Event.where(user_id: params[:id]).destroy_all
+    MailBox.where(emitter: params[:id]).destroy_all
+    MailBox.where(receiver: params[:id]).destroy_all
+    CommentReply.where(user_id: params[:id]).destroy_all
+    Organization.where(user_id: params[:id]).destroy_all
+    DateVote.where(user_id: params[:id]).destroy_all
+    UserOnEvent.where(user_id: params[:id]).destroy_all
+    UserOnOrganization.where(user_id: params[:id]).destroy_all
     @user.destroy
     respond_to do |format|
       format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
@@ -77,6 +82,7 @@
 
   # Only allow a list of trusted parameters through.
   def user_params
-    params.fetch(:user, {}).permit(:username, :full_name, :email, :age, :flyer)
+    params.fetch(:user, {}).permit(:username, :full_name, :email, :age, :flyer, :search, :password, :admin)
   end
 end
+

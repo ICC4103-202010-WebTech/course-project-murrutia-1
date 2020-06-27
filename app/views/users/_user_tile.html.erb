@@ -1,0 +1,13 @@
+ <li class="flex-item-user">
+   <p>
+     <% if user.flyer.attached? %>
+       <%= link_to image_tag(user.flyer, class: "flex-image_XXS", data: {target: "#myModal", toggle: "modal"}), user %>
+     <% else %>
+       <%= link_to image_tag("profile_pic.png", class: "flex-image-XS"), user%>
+     <% end %> |
+     Username: <%= link_to user.username , user %>
+     | Full Name: <%= user.full_name %>
+     | Age: <%= user.age %>
+     | Email: <%= user.email %>
+   </p>
+  </li>

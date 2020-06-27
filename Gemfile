@@ -4,8 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.6.1'
 
 gem 'devise'
-gem 'mailboxer'
-gem 'chosen-rails'
+gem 'omniauth-google-oauth2'
 gem 'bootstrap'
 gem 'jquery-rails'
 gem 'simple_form'

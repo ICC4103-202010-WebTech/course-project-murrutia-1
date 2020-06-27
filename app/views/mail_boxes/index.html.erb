@@ -1,0 +1,42 @@
+<h1>Inbox</h1>
+<div class="aa">
+  <br>
+  <button type="button-primary"><%= link_to 'New message', new_mail_box_path %></button>
+</div>
+<table>
+  <thead>
+  <tr>
+    <th colspan="3"></th>
+  </tr>
+  </thead>
+<br>
+  <tbody>
+  <div class="flex-container">
+    <li class="flex-item-event2">
+      <% if not @mail_box.nil? %>
+      <p>No Messages</p>
+        <p1>This may be because you haven't received messages yet, or the sender/receiver removed his account.</p1>
+      <% end %>
+      <% @mail_boxes.each do |mail| %>
+        <% if mail.receiver == current_user.id %>
+          <% @user.each do |user| %>
+            <% if user.id == mail.emitter %>
+              <br>
+              <p>From <%= user.username %> :
+                <%= mail.message %></p>
+            <% end %>
+          <% end %>
+        <% end %>
+        <% if mail.emitter == current_user.id %>
+          <% @user.each do |user| %>
+            <% if user.id == mail.receiver %>
+              <br>
+              <p>To <%= user.username %> : <%= mail.message %></p>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </li>
+  </div>
+  </tbody>
+</table>

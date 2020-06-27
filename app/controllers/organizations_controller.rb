@@ -4,14 +4,13 @@ class OrganizationsController < ApplicationController
   # GET /organizations
   # GET /organizations.json
   def index
-    @organizations = Organization.all
+    @organizations = Organization.search(params[:search])
   end
 
   # GET /organizations/1
   # GET /organizations/1.json
   def show
-    @events = Event.all
-    @organizations = Organization.all
+    @event = Event.all
     @user = User.all
   end
 
@@ -72,6 +71,6 @@ class OrganizationsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def organization_params
-      params.fetch(:organization, {}).permit(:flyer, :name, :description)
+      params.fetch(:organization, {}).permit(:flyer, :name, :description, :user_id)
     end
 end

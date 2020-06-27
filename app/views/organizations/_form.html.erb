@@ -10,27 +10,27 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="row ml-0">
-    <%= form_with model: organization, local: true do |form| %>
-      <%= errors_for organization %>
-      <div class="form-group">
-        <%= form.label :name %>
-        <%= form.text_field :name, class: "form-control" %>
-      </div><br>
-      <div class="form-group">
-        <%= form.label :description %>
-        <%= form.text_area :description, class: "form-control" %>
-      </div><br>
-      <div class="form-group">
-        <%= form.label :Image %>
-        <br>
-        <%= form.file_field :flyer%>
-      </div><br>
-      <div class="form-group mt-2">
-        <%= form.submit submit_tag, class: ["btn", "btn-primary"] %><br><br>
-        <%= link_to "Back", :back, class: ["btn", "btn-secondary"] %>
-      </div>
-    <% end %>
-  </div>
 <% end %>
+
+<div class="row ml-0">
+  <%= form_with model: organization, local: true do |form| %>
+    <%= errors_for organization %>
+    <div class="form-group">
+      <%= form.label :name %><br>
+      <%= form.text_field :name, class: "form-control" %>
+    </div><br>
+    <div class="form-group">
+      <%= form.label :description %><br>
+      <%= form.text_area :description, class: "form-control" %>
+    </div><br>
+    <div class="form-group">
+      <%= form.label :Image %>
+      <br>
+      <%= form.file_field :flyer%>
+    </div><br>
+    <%= form.hidden_field :user_id, value: current_user.id %>
+    <div class="form-group mt-2"><br>
+      <%= form.submit submit_btn_text, class: ["btn", "btn-primary"] %>
+    </div><br><br>
+  <% end %>
+</div>
