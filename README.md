@@ -26,6 +26,12 @@ yarn install --check-files
 
 bundle install
 
+rails s
+
+-- if the seeds are not loaded:
+
+rake db:drop
+
 rake db:migrate
 
 rake db:seed
