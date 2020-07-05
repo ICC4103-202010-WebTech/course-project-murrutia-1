@@ -16,6 +16,7 @@ class EventsController < ApplicationController
     @comments = Comment.all
     @user = User.all
     @comment_replies = CommentReply
+    @event_dates_to_votes = DateVote.joins(:event).where("date_votes.event_id = #{params[:id]}")
   end
 
   # GET /events/new

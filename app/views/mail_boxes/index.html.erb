@@ -1,5 +1,5 @@
 <h1>Inbox</h1>
-<div class="aa">
+<div >
   <br>
   <button type="button-primary"><%= link_to 'New message', new_mail_box_path %></button>
 </div>
@@ -11,8 +11,8 @@
   </thead>
 <br>
   <tbody>
-  <div class="flex-container">
-    <li class="flex-item-event2">
+  <div class="chat">
+    <li class="chat">
       <% if not @mail_box.nil? %>
       <p>No Messages</p>
         <p1>This may be because you haven't received messages yet, or the sender/receiver removed his account.</p1>

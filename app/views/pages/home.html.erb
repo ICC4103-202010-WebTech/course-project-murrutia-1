@@ -6,9 +6,14 @@
 </head>
 <body>
 <h2>Recent Events</h2>
+<% a=0 %>
 <div class="flex-container">
   <% @events.each do |event| %>
-    <p> <%= link_to  event.name, event %></p><br>
+    <% if a==5 %>
+      <%break %>
+    <%end %>
+    <%= render partial: 'events/event_tile', locals: { event: event } %>
+    <% a+=1 %>
   <% end %>
 </div>
 

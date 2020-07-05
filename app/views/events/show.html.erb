@@ -46,6 +46,7 @@
     <% end %>
   <% end %>
 </p>
+<div class = "comments">
 <h3>Comments:</h3>
 <p>
   <% @event.comments.each do |comment| %>
@@ -63,7 +64,7 @@
         <p>
           <% if reply.comment.id == comment.id %>
           <div class="flex-item-reply">
-            -> <%= reply.user.username %>:
+            reply-> <%= reply.user.username %>:
             <%= reply.message %>
           </div>
         <% end %>
@@ -73,16 +74,28 @@
     </p>
     </tr>
   <% end %>
+
   <% if user_signed_in? %>
     </p>
     <p><%= link_to '- New Comment -', new_comment_path(@comment) %> </p>
     <br>
   <% end %>
+  </div>
 
   <% @event.files.each do |file| %>
     <%= image_tag(file, class: "flex-image-L") %><br>
   <% end %>
-
+<br>
+<% if user_signed_in? %>
+<select class="custom-select">
+  <option selected>Possible dates</option>
+  <%@event_dates_to_votes.each_with_index do |event_dates_to_vote,i| %>
+    <option value="i"><%=  event_dates_to_vote.date_voted %></option>
+  <% end %>
+</select>
+<button type="button" class="list-group-item list-group-item-action p-2">vote</button>
+<% end %>
+<br><br>
   <br>
   <% if user_signed_in? %>
     <div class="flex">

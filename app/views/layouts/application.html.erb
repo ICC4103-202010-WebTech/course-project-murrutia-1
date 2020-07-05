@@ -25,7 +25,12 @@
     <% end %>
     <li><a <%= link_to 'Events', events_path %></a></li>
     <li><a <%= link_to 'Organizations', organizations_path %></a></li>
-    <li><a <%= link_to 'Search', new_search_path %></a></li>
+    <li><%= form_for  Search.new do |f| %>
+        <div class="field">
+          <%= f.text_field :keyword, placeholder: "Search..." %>
+          <%= f.submit "Search" %>
+        </div>
+      <% end %></li>
     <% if not user_signed_in? %>
       <li style="float: right"><%= link_to "Sign In", new_user_session_path %></li>
       <li style="float: right"><%= link_to "Register", new_user_registration_path %></li>
@@ -45,7 +50,7 @@
 <div id="container">
   <aside id="customer_info">
     <% if  current_user.present? %>
-      <h4>Hi! <%= current_user.username %></h4>
+      <h4>Hi! <%= link_to current_user.username, user_path(current_user) %></h4>
       <% if current_user.admin %>
         <h6>~Admin Session~</h6>
       <% end %>
@@ -63,6 +68,7 @@
 </body>
 
 <footer>
+  <p style="float: right"> <a href="#">Back to top</a> </p>
   <p><%= link_to "Terms of Service", terms_of_service_index_path %>
     | <%= link_to "Acceptable Use Policy", acceptable_use_policy_index_path %><p style="float: right">Developed by Martin Urrutia</p></p>
 </footer>

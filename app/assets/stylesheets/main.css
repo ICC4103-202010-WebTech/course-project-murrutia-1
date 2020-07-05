@@ -19,7 +19,7 @@ body {
 }
 
 a {
-    color: #2b2b2b;
+    color: black;
     text-decoration: none;
 }
 
@@ -29,9 +29,9 @@ a:hover {
 }
 
 header {
-    background: #EFEFEF;
+    background: goldenrod;
     background-size: contain;
-
+    color: #B00100;
     height: 70px;
 }
 
@@ -43,25 +43,26 @@ div#container {
 
 aside#customer_info {
     width: 10%;
-    color: blue;
-    background: #EFEFEF;
+    color: firebrick;
+    background: goldenrod;
     padding: 1em;
 }
 
 main {
     width: 100%;
     overflow: auto;
-    color: white;
-    background: darkolivegreen;
+
+    color: orange;
+    background: darkred;
     padding: 1em;
 }
 
 footer {
-    color: black;
+    color: #EFEFEF;
     position: relative;
-    background: darkgoldenrod;
+    background: firebrick;
     padding: 1em;
-    height: 40px;
+    height: 100px;
     clear: both;
     bottom: 0;
 }
@@ -71,7 +72,7 @@ ul#navbar {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: darkorange;
+    background-color: firebrick;
 }
 
 
@@ -107,16 +108,19 @@ td, th {
 }
 .flex-item{
     display: inline;
-    background: darkgoldenrod;
+    background: goldenrod;
     padding-left: 30px;
     width: available;
     height: auto;
     margin-top: 10px;
     line-height: 50px;
-    color: white;
+    color: firebrick;
     font-weight: bold;
     font-size: 2em;
     text-align: left;
+}
+.flex-item-user{
+    background: goldenrod;
 }
 
 .flex-image{
@@ -133,7 +137,15 @@ td, th {
 .flex-image-XL {
     padding-top: 10px;
     padding-left: 10px;
-    height: 400px
+    height: 390px
+}
+.comments {
+    background: firebrick;
+    color: aliceblue;
+}
+.chat {
+    background: firebrick;
+    color: aliceblue;
 }
 img {
     height: 100px;

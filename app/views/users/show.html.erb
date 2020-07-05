@@ -1,4 +1,4 @@
-<h1>Profile of  <% if current_user %><%= @user.username  %><%end %></h1>
+<p><h1>Profile of  <% if current_user %><%= @user.username  %><%end %></h1><% if current_user== @user %>°Online<%end%></p>
 <% if current_user.flyer.attached? %>
   <%= image_tag(current_user.flyer, class: "flex-image-L", data: {target: "#myModal", toggle: "modal"}) %>
 <% else %>
@@ -8,8 +8,15 @@
 <p>Username: <%= @user.username %>
   <br>Full Name: <%= @user.full_name %>
   <br>Age: <%= @user.age %>
-  <br>Email: <%= @user.email %>
-  <br><h3>User role:</h3>
+  <br>Email: <%= @user.email %><br>
+  <br> Last Sign in:
+  <% if @user.last_sign_in_at.nil? %>
+    No session registered
+  <% else %>
+    <%= @user.last_sign_in_at %>
+  <% end %>
+  <br>
+<h3>User role:</h3>
   <% if @user.admin %>
     System Admin
   <% else %>
@@ -20,31 +27,33 @@
       - Administrator of "<%= organization.name %>" organization
     <% end %>
   <% end %>
-
 </p>
-
-<h3> Events you have created:</h3>
+<% c=0 %>
+<h3> Events created by <%=@user.username %>:</h3>
 <% @event.each do |event| %>
   <% if event.user_id == @user.id %>
     - <%= link_to event.name, event %><br>
+    <% c=1%>
   <% end %>
 <% end %>
+<% if c==0 %> - <%=@user.username%> has not created any events <%end %>
 <br>
-<h3> Your invitations:</h3><br>
+<% b=0 %>
+<h3> Your invitations:</h3>
 <% @user_on_event.each do |user| %>
   <% if user.user_id == @user.id %>
     <% @event.each do |event| %>
       <% if user.event_id == event.id %>
         - <%= link_to event.name, event %><br>
+        <% b=1 %>
       <% end %>
     <% end %>
   <% end %>
 <% end %>
-<br>
+<% if b==0 %> - You don't have invitations <%end %>
+<br><br>
 <br>
 <% if (user_signed_in? && current_user.id == @user.id) or (user_signed_in? && current_user.admin) %> <!-- ONLY THE USER CAN EDIT OR DESTROY or an admin-->
-  <%= button_to "Destroy", @user, {:onclick => "return confirm('Are you sure?')", :method => :delete, :remote => true} %>
-  <br>
   <%= link_to 'Edit', edit_user_path(@user) %> |
 <% end %>
 <%= link_to 'Back', :back %>

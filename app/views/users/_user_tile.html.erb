@@ -1,4 +1,5 @@
- <li class="flex-item-user">
+ <div class="flex-item-user">
+<li class="flex-item-user">
    <p>
      <% if user.flyer.attached? %>
        <%= link_to image_tag(user.flyer, class: "flex-image_XXS", data: {target: "#myModal", toggle: "modal"}), user %>
@@ -11,3 +12,4 @@
      | Email: <%= user.email %>
    </p>
   </li>
+ </div>

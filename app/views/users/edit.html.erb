@@ -9,6 +9,8 @@
                user: @user,
                submit_btn_text: "Update"
            } %>
+<br><br>
+<%= button_to "Destroy", @user, {:onclick => "return confirm('Are you sure?')", :method => :delete, :remote => true} %>
 <br>
 <%= link_to "Change password", edit_user_registration_path %> |
 <%= link_to "Back", :back, class: ["btn", "btn-secondary"] %>
