@@ -93,7 +93,7 @@
     <option value="i"><%=  event_dates_to_vote.date_voted %></option>
   <% end %>
 </select>
-<button type="button" class="list-group-item list-group-item-action p-2">vote</button>
+<button type="button" class="list-group-item list-group-item-action p-2"><%= link_to 'vote', event_path(@event) %></button>
 <% end %>
 <br><br>
   <br>
@@ -117,7 +117,7 @@
   <% end %>
 
   <% if user_signed_in? && current_user.id == @event.user_id %>
-    <h4>Invite People:</h4>
+    <h4>Invite people to "<%=@event.name%>":</h4>
     <div class="row ml-0">
       <%= form_with model: @event, local: true do |form| %>
         <%= errors_for @event %>
@@ -125,10 +125,10 @@
           <%= form.label :user %>
           <%= form.collection_select(:user_id, User.all.order(name: :asc), :id, :username, {}, {class: "form-control"}) %>
         </div>  <br>
-        <div class="form-group">
-          <%= form.label :event %>
-          <%= form.collection_select(:event_id, Event.all.order(name: :asc), :id, :name, {}, {class: "form-control"}) %>
-        </div>  <br>
+        <!div class="form-group">
+          <!%= form.label :event %>
+          <!%= form.collection_select(:event_id, Event.all.order(name: :asc), :id, :name, {}, {class: "form-control"}) %>
+        <!/div>  <br>
         <div class="form-group mt-2">
           <%= form.submit "Invite", class: ["btn", "btn-primary"] %>
         </div>
@@ -142,8 +142,6 @@
 
   <br>
   <% if (user_signed_in? && current_user.id == @event.user_id) or (user_signed_in? && current_user.admin) %>
-    <%= button_to "Destroy", @event, {:onclick => "return confirm('Are you sure?')", :method => :delete, :remote => true} %>
-    <br>
     <%= link_to 'Edit', edit_event_path(@event) %> |
   <% end %>
   <% if user_signed_in? %>

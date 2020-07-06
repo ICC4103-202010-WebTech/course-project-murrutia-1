@@ -2,7 +2,7 @@
   <br> <%= link_to event.name, event %><br>
   Description: <%= event.description %><br>
   Address: <%= event.location %><br>
-  Date: <%= event.starting_event_date %>
+  Date: <%= event.creation_date %>/07/23
   <aside style="float: right; padding-right: 20px">
     <% if event.flyer.attached? %>
       <%= link_to image_tag(event.flyer, class: "flex-image-L"), event %>

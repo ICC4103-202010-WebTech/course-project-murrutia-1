@@ -7,3 +7,6 @@
                event: @event,
                submit_btn_text: "Update"
            } %>
+<br><br>
+<%= button_to "Destroy", @event, {:onclick => "return confirm('Are you sure?')", :method => :delete, :remote => true} %>
+<br>

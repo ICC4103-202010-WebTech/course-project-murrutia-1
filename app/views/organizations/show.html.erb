@@ -33,8 +33,6 @@
 <br><br>
 
 <% if (user_signed_in? && current_user.id == @organization.user_id) or (user_signed_in? && current_user.admin) %> <!-- ONLY THE CREATOR OF THE ORGANIZATION CAN EDIT OR DESTROY or an admin-->
-  <%= button_to "Destroy", @organization, {:onclick => "return confirm('Are you sure?')", :method => :delete, :remote => true} %>
-  <br>
   <%= link_to 'Edit', edit_organization_path(@organization) %> |
   <%= link_to 'Back', :back %>
 

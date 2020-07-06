@@ -147,6 +147,9 @@ td, th {
     background: firebrick;
     color: aliceblue;
 }
+.notice{
+    color: chartreuse;
+}
 img {
     height: 100px;
 }

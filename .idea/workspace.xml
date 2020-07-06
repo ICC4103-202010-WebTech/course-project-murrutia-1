@@ -4,17 +4,14 @@
     <list default="true" id="9501fd6a-1229-4bcb-be1c-b3b20edeaece" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/assets/stylesheets/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/stylesheets/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controllers/events_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/events_controller.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controllers/searches_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/searches_controller.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/acceptable_use_policy/index.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/acceptable_use_policy/index.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/events/_form.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/events/_form.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/events/edit.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/events/edit.html.erb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/views/events/show.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/events/show.html.erb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/views/layouts/application.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/layouts/application.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/mail_boxes/index.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/mail_boxes/index.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/pages/home.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/pages/home.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/users/_user_tile.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/users/_user_tile.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/users/edit.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/users/edit.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/users/index.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/users/index.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/users/show.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/users/show.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/organizations/_form.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/organizations/_form.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/organizations/edit.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/organizations/edit.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/organizations/show.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/organizations/show.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/users/_form.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/users/_form.html.erb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/development.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db/development.sqlite3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/log/development.log" beforeDir="false" afterPath="$PROJECT_DIR$/log/development.log" afterDir="false" />
     </list>
@@ -153,7 +150,7 @@
       <workItem from="1592890978071" duration="22675000" />
       <workItem from="1593301691152" duration="104000" />
       <workItem from="1593612883229" duration="27000" />
-      <workItem from="1593730798049" duration="12583000" />
+      <workItem from="1593730798049" duration="17450000" />
     </task>
     <servers />
   </component>
